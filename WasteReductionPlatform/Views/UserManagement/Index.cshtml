@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WasteReductionPlatform.Models.User>
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<h1>User Management</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Street Address</th>
+            <th>City</th>
+            <th>Province</th>
+            <th>Postal Code</th>
+            <th>User Type</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.StreetAddress</td>
+                <td>@user.City</td>
+                <td>@user.Province</td>
+                <td>@user.PostalCode</td>
+                <td>@user.UserType</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-secondary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

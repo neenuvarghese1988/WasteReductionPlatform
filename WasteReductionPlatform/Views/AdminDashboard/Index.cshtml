@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container">
+    <h1 class="mt-4">Admin Dashboard</h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Pickup Schedules</h5>
+                    <p class="card-text">Create and manage waste pickup schedules.</p>
+                    <a asp-controller="PickupSchedules" asp-action="Create" class="btn btn-primary btn-block">Go to Schedules</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">View Waste Logs</h5>
+                    <p class="card-text">Review and analyze waste logs.</p>
+                    <a asp-controller="WasteLogs" asp-action="Index" class="btn btn-secondary btn-block">Go to Logs</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Users</h5>
+                    <p class="card-text">View, edit, and delete user accounts.</p>
+                    <a asp-controller="UserManagement" asp-action="Index" class="btn btn-info btn-block">Go to Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Notifications</h5>
+                    <p class="card-text">Send notifications and alerts.</p>
+                    <a href="/Notifications" class="btn btn-warning btn-block">Manage Notifications</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Reports</h5>
+                    <p class="card-text">Generate and view reports.</p>
+                    <a href="/Reports" class="btn btn-success btn-block">View Reports</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

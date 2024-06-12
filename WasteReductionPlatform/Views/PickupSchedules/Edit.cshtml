@@ -1,0 +1,41 @@
+﻿@model WasteReductionPlatform.ViewModels.PickupScheduleViewModel
+
+@{
+    ViewData["Title"] = "Edit Pickup Schedule";
+}
+
+<h1>Edit Pickup Schedule</h1>
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="PickupDate"></label>
+        <input asp-for="PickupDate" class="form-control" />
+        <span asp-validation-for="PickupDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PickupType"></label>
+        <select asp-for="PickupType" class="form-control">
+            <option value="BlueBox">Blue Box (Recyclables)</option>
+            <option value="GreenCart">Green Cart (Organic Waste)</option>
+            <option value="Garbage">Garbage</option>
+            <option value="Bulk">Bulk Waste</option>
+            <option value="Hazardous">Hazardous Waste</option>
+        </select>
+        <span asp-validation-for="PickupType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UserType"></label>
+        <select asp-for="UserType" class="form-control">
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+        </select>
+        <span asp-validation-for="UserType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Area"></label>
+        <input asp-for="Area" class="form-control" />
+        <span asp-validation-for="Area" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

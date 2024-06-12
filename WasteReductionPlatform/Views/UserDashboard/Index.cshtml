@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "User Dashboard";
+}
+
+<div class="container">
+    <h1 class="mt-4">User Dashboard</h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Schedule Pickup</h5>
+                    <p class="card-text">Arrange a new waste pickup for your area.</p>
+                    <a href="/PickupSchedules/Schedule" class="btn btn-primary btn-block">Schedule Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Log Waste</h5>
+                    <p class="card-text">Record the type and amount of waste generated.</p>
+                    <a href="/WasteLogs/Create" class="btn btn-secondary btn-block">Log Waste</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">View Profile</h5>
+                    <p class="card-text">Review and update your profile information.</p>
+                    <a asp-controller="Profile" asp-action="Index" class="btn btn-info btn-block">View Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Waste Reduction Tips</h5>
+                    <p class="card-text">Get tips to reduce your waste production.</p>
+                    <a href="/Tips" class="btn btn-warning btn-block">Get Tips</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Educational Resources</h5>
+                    <p class="card-text">Learn more about waste management and recycling.</p>
+                    <a href="/Resources" class="btn btn-success btn-block">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Notifications</h5>
+                    <p class="card-text">View recent notifications about your pickups.</p>
+                    <a href="/Notifications" class="btn btn-dark btn-block">View Notifications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿@model WasteReductionPlatform.ViewModels.WasteLogViewModel
+
+@{
+    ViewData["Title"] = "Log New Waste";
+}
+
+<h1>Log New Waste</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Date"></label>
+        <input asp-for="Date" class="form-control" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Weight"></label>
+        <input asp-for="Weight" class="form-control" />
+        <span asp-validation-for="Weight" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="WasteType"></label>
+        <select asp-for="WasteType" class="form-control">
+            <option value="BlueBox">Blue Box (Recyclables)</option>
+            <option value="GreenCart">Green Cart (Organic Waste)</option>
+            <option value="Garbage">Garbage</option>
+            <option value="Bulk">Bulk Waste</option>
+            <option value="Hazardous">Hazardous Waste</option>
+        </select>
+        <span asp-validation-for="WasteType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UserType"></label>
+        <select asp-for="UserType" class="form-control">
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+        </select>
+        <span asp-validation-for="UserType" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Log Waste</button>
+</form>
