@@ -12,7 +12,7 @@ using WasteReductionPlatform.Data;
 namespace WasteReductionPlatform.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240611225207_Initial")]
+    [Migration("20240614044348_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -180,8 +180,9 @@ namespace WasteReductionPlatform.Migrations
                     b.Property<DateTime>("PickupDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PickupType")
-                        .HasColumnType("int");
+                    b.Property<string>("PickupType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserType")
                         .HasColumnType("int");
@@ -296,8 +297,9 @@ namespace WasteReductionPlatform.Migrations
                     b.Property<int>("UserType")
                         .HasColumnType("int");
 
-                    b.Property<int>("WasteType")
-                        .HasColumnType("int");
+                    b.Property<string>("WasteType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");

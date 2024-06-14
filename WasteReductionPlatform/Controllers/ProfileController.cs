@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 using WasteReductionPlatform.Models;
 using WasteReductionPlatform.ViewModels;
@@ -32,7 +33,7 @@ public class ProfileController : Controller
             Province = user.Province,
             PostalCode = user.PostalCode
         };
-
+        PopulateProvinces(user.Province);
         return View(model);
     }
 
@@ -44,6 +45,7 @@ public class ProfileController : Controller
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
+                TempData["Error"] = "User not found.";
                 return NotFound();
             }
 
@@ -58,6 +60,7 @@ public class ProfileController : Controller
 
             if (result.Succeeded)
             {
+                TempData["Success"] = "Profile updated successfully.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -66,7 +69,29 @@ public class ProfileController : Controller
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
-
+        PopulateProvinces(model.Province); // Repopulate provinces in case of validation error
         return View(model);
+    }
+
+    private void PopulateProvinces(string selectedProvince)
+    {
+        var provinces = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Alberta", Text = "Alberta" },
+        new SelectListItem { Value = "British Columbia", Text = "British Columbia" },
+        new SelectListItem { Value = "Manitoba", Text = "Manitoba" },
+        new SelectListItem { Value = "New Brunswick", Text = "New Brunswick" },
+        new SelectListItem { Value = "Newfoundland and Labrador", Text = "Newfoundland and Labrador" },
+        new SelectListItem { Value = "Nova Scotia", Text = "Nova Scotia" },
+        new SelectListItem { Value = "Ontario", Text = "Ontario" },
+        new SelectListItem { Value = "Prince Edward Island", Text = "Prince Edward Island" },
+        new SelectListItem { Value = "Quebec", Text = "Quebec" },
+        new SelectListItem { Value = "Saskatchewan", Text = "Saskatchewan" },
+        new SelectListItem { Value = "Northwest Territories", Text = "Northwest Territories" },
+        new SelectListItem { Value = "Nunavut", Text = "Nunavut" },
+        new SelectListItem { Value = "Yukon", Text = "Yukon" }
+    };
+
+        ViewBag.Provinces = new SelectList(provinces, "Value", "Text", selectedProvince);
     }
 }

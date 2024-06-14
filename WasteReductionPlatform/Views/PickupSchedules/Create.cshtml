@@ -5,6 +5,19 @@
 }
 
 <h1>Create Pickup Schedule</h1>
+<!-- TempData Messages -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
 
 <form asp-action="Create">
     <div class="form-group">
@@ -12,29 +25,85 @@
         <input asp-for="PickupDate" class="form-control" />
         <span asp-validation-for="PickupDate" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="PickupType"></label>
-        <select asp-for="PickupType" class="form-control">
-            <option value="BlueBox">Blue Box (Recyclables)</option>
-            <option value="GreenCart">Green Cart (Organic Waste)</option>
-            <option value="Garbage">Garbage</option>
-            <option value="Bulk">Bulk Waste</option>
-            <option value="Hazardous">Hazardous Waste</option>
-        </select>
-        <span asp-validation-for="PickupType" class="text-danger"></span>
-    </div>
+
     <div class="form-group">
         <label asp-for="UserType"></label>
-        <select asp-for="UserType" class="form-control">
+        <select asp-for="UserType" class="form-control" id="UserType">
             <option value="Residential">Residential</option>
             <option value="Commercial">Commercial</option>
         </select>
         <span asp-validation-for="UserType" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="PickupType"></label>
+        <select asp-for="PickupType" class="form-control" id="PickupType">
+            <!-- Default options will be populated by JavaScript based on UserType -->
+        </select>
+        <span asp-validation-for="PickupType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Area"></label>
         <input asp-for="Area" class="form-control" />
         <span asp-validation-for="Area" class="text-danger"></span>
     </div>
+
     <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-controller="AdminDashboard" asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
+
+@section Scripts {
+    <script>
+        // Define residential and commercial waste types
+        const residentialWasteTypes = [
+            { value: "BlueBox", text: "Blue Box (Recyclables)" },
+            { value: "GreenCart", text: "Green Cart (Organic Waste)" },
+            { value: "Garbage", text: "Garbage" },
+            { value: "Bulk", text: "Bulk Waste" },
+            { value: "Hazardous", text: "Hazardous Waste" }
+        ];
+
+        const commercialWasteTypes = [
+            { value: "GeneralWaste", text: "General Waste (Garbage)" },
+            { value: "PaperAndCardboard", text: "Paper and Cardboard" },
+            { value: "Plastics", text: "Plastics" },
+            { value: "Glass", text: "Glass" },
+            { value: "Metals", text: "Metals" },
+            { value: "OrganicWaste", text: "Organic Waste" },
+            { value: "ConstructionAndDemolition", text: "Construction and Demolition (C&D)" },
+            { value: "ElectronicWaste", text: "Electronic Waste" },
+            { value: "MedicalWaste", text: "Medical and Clinical Waste" },
+            { value: "ConfidentialPaper", text: "Confidential Paper" },
+            { value: "Textiles", text: "Textiles" },
+            { value: "GreaseAndOils", text: "Grease and Oils" },
+            { value: "WoodWaste", text: "Wood Waste" },
+            { value: "ChemicalWaste", text: "Chemical Waste" },
+            { value: "IndustrialWaste", text: "Industrial Waste" }
+        ];
+
+        // Populate waste types based on the selected user type
+        function populateWasteTypes() {
+            const userType = document.getElementById("UserType").value;
+            const pickupType = document.getElementById("PickupType");
+
+            // Clear existing options
+            pickupType.innerHTML = "";
+
+            // Choose the right list of waste types
+            const wasteTypes = userType === "Residential" ? residentialWasteTypes : commercialWasteTypes;
+
+            // Populate the pickup type dropdown
+            wasteTypes.forEach(type => {
+                const option = document.createElement("option");
+                option.value = type.value;
+                option.text = type.text;
+                pickupType.appendChild(option);
+            });
+        }
+
+        // Event listener for user type change
+        document.getElementById("UserType").addEventListener("change", populateWasteTypes);
+
+        // Initialize the pickup type dropdown on page load
+        window.onload = populateWasteTypes;
+    </script>
+}

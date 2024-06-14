@@ -5,6 +5,19 @@
 }
 
 <h1>Edit Pickup Schedule</h1>
+<!-- TempData Messages -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
 
 <form asp-action="Edit">
     <div class="form-group">

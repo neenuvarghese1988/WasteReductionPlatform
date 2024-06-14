@@ -7,16 +7,18 @@ namespace WasteReductionPlatform.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pickup date is required.")]
         public DateTime PickupDate { get; set; }
 
-        [Required]
-        public WasteType PickupType { get; set; }
+        [Required(ErrorMessage = "Please select a pickup type.")]
+        public string PickupType { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please select the user type.")]
         public UserType UserType { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please provide the area for pickup.")]
         public string Area { get; set; }
+
+        public bool IsConfirmed { get; set; }
     }
 }

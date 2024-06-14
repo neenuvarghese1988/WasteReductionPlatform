@@ -8,31 +8,45 @@
 
 <form asp-action="Edit">
     <input type="hidden" asp-for="Id" />
+    
+    <!-- Email Field -->
     <div class="form-group">
         <label asp-for="Email"></label>
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+    
+    <!-- Street Address Field -->
     <div class="form-group">
         <label asp-for="StreetAddress"></label>
         <input asp-for="StreetAddress" class="form-control" />
         <span asp-validation-for="StreetAddress" class="text-danger"></span>
     </div>
+    
+    <!-- City Field -->
     <div class="form-group">
         <label asp-for="City"></label>
         <input asp-for="City" class="form-control" />
         <span asp-validation-for="City" class="text-danger"></span>
     </div>
+    
+   <!-- Province Dropdown -->
     <div class="form-group">
         <label asp-for="Province"></label>
-        <input asp-for="Province" class="form-control" />
+        <select asp-for="Province" class="form-control" asp-items="ViewBag.Provinces">
+            <option value="">-- Select Province --</option>
+        </select>
         <span asp-validation-for="Province" class="text-danger"></span>
     </div>
+    
+    <!-- Postal Code Field -->
     <div class="form-group">
         <label asp-for="PostalCode"></label>
         <input asp-for="PostalCode" class="form-control" />
         <span asp-validation-for="PostalCode" class="text-danger"></span>
     </div>
+    
+    <!-- User Type Dropdown -->
     <div class="form-group">
         <label asp-for="UserType"></label>
         <select asp-for="UserType" class="form-control">
@@ -41,6 +55,7 @@
         </select>
         <span asp-validation-for="UserType" class="text-danger"></span>
     </div>
+    
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

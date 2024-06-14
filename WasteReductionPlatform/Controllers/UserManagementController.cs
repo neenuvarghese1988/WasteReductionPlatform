@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.Linq;
 using WasteReductionPlatform.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 [Authorize(Roles = "Admin")]
 public class UserManagementController : Controller
@@ -17,7 +16,9 @@ public class UserManagementController : Controller
 
     public IActionResult Index()
     {
-        var users = _userManager.Users.ToList();
+        var users = _userManager.Users
+           .Where(user => !user.IsAdmin)
+           .ToList();
         return View(users);
     }
 
@@ -28,6 +29,8 @@ public class UserManagementController : Controller
         {
             return NotFound();
         }
+
+        PopulateProvinces(user.Province);
         return View(user);
     }
 
@@ -54,6 +57,8 @@ public class UserManagementController : Controller
             return RedirectToAction(nameof(Index));
         }
 
+        PopulateProvinces(model.Province); // Repopulate provinces in case of validation error
+
         return View(model);
     }
 
@@ -78,5 +83,27 @@ public class UserManagementController : Controller
 
         await _userManager.DeleteAsync(user);
         return RedirectToAction(nameof(Index));
+    }
+
+    private void PopulateProvinces(string selectedProvince)
+    {
+        var provinces = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Alberta", Text = "Alberta" },
+        new SelectListItem { Value = "British Columbia", Text = "British Columbia" },
+        new SelectListItem { Value = "Manitoba", Text = "Manitoba" },
+        new SelectListItem { Value = "New Brunswick", Text = "New Brunswick" },
+        new SelectListItem { Value = "Newfoundland and Labrador", Text = "Newfoundland and Labrador" },
+        new SelectListItem { Value = "Nova Scotia", Text = "Nova Scotia" },
+        new SelectListItem { Value = "Ontario", Text = "Ontario" },
+        new SelectListItem { Value = "Prince Edward Island", Text = "Prince Edward Island" },
+        new SelectListItem { Value = "Quebec", Text = "Quebec" },
+        new SelectListItem { Value = "Saskatchewan", Text = "Saskatchewan" },
+        new SelectListItem { Value = "Northwest Territories", Text = "Northwest Territories" },
+        new SelectListItem { Value = "Nunavut", Text = "Nunavut" },
+        new SelectListItem { Value = "Yukon", Text = "Yukon" }
+    };
+
+        ViewBag.Provinces = new SelectList(provinces, "Value", "Text", selectedProvince);
     }
 }

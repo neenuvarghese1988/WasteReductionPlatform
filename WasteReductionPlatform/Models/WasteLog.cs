@@ -16,9 +16,9 @@ namespace WasteReductionPlatform.Models
         public double Weight { get; set; }
 
         [Required]
-        public WasteType WasteType { get; set; }
+        public string WasteType { get; set; }
 
         [Required]
-        public UserType UserType { get; set; }
+        public UserType? UserType { get; set; }
     }
 }

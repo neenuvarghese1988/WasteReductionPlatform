@@ -3,25 +3,23 @@ using WasteReductionPlatform.Models;
 
 namespace WasteReductionPlatform.ViewModels
 {
-    public class UserProfileViewModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+	public class UserProfileViewModel
+	{
+		public string Email { get; set; }
 
-        [Required]
-        public UserType UserType { get; set; }
+		
+		public UserType? UserType { get; set; } // Nullable
 
-        [Required]
-        public string StreetAddress { get; set; }
+		[Required(ErrorMessage = "Street address is required.")]
+		public string StreetAddress { get; set; }
 
-        [Required]
-        public string City { get; set; }
+		[Required(ErrorMessage = "City is required.")]
+		public string City { get; set; }
 
-        [Required]
-        public string Province { get; set; }
+		[Required(ErrorMessage = "Province is required.")]
+		public string Province { get; set; }
 
-        [Required]
-        public string PostalCode { get; set; }
-    }
+		[Required(ErrorMessage = "Postal code is required.")]
+		public string PostalCode { get; set; }
+	}
 }

@@ -19,19 +19,28 @@ namespace WasteReductionPlatform
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WasteReductionContext")));
 
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            builder.Services.Configure<IdentityOptions>(options =>
+            builder.Services.AddDefaultIdentity<User>(options =>
             {
+                options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
-            });
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //builder.Services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromDays(30); // Persistent login duration
+            //    options.SlidingExpiration = false;
+            //    options.Cookie.IsEssential = true;
+            //    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            //});
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
@@ -63,7 +72,11 @@ namespace WasteReductionPlatform
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            //app.UseCookiePolicy(new CookiePolicyOptions
+            //{
+            //    MinimumSameSitePolicy = SameSiteMode.Lax, // Ensure cookies are properly handled cross-site
+            //    HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always
+            //});
             app.UseAuthentication();
             app.UseAuthorization();
 

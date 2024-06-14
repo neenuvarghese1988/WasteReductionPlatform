@@ -8,16 +8,18 @@ namespace WasteReductionPlatform.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please provide a valid date.")]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Weight is required.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Weight must be a positive number.")]
         public double Weight { get; set; }
 
-        [Required]
-        public WasteType WasteType { get; set; }
+        [Required(ErrorMessage = "Please select a type of waste.")]
+        public string WasteType { get; set; }
 
-        [Required]
-        public UserType UserType { get; set; }
+      //  [Required(ErrorMessage = "User type is required.")]
+        public UserType? UserType { get; set; }
     }
 }

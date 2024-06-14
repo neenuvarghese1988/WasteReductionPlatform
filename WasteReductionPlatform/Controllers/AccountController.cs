@@ -103,22 +103,40 @@ namespace WasteReductionPlatform.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-
-                if (result.Succeeded)
+                // Check if user exists by email
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
                 {
-                    var user = await _userManager.FindByEmailAsync(model.Email);
-                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+
+                    // Check if email is confirmed
+                    if (!user.EmailConfirmed)
                     {
-                        return RedirectToAction("Index", "AdminDashboard");
+                        ModelState.AddModelError(string.Empty, "Please confirm your email before logging in.");
+                        return View(model);
+                    }
+
+                    // Try to sign in
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            return RedirectToAction("Index", "AdminDashboard");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "UserDashboard");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "UserDashboard");
+                        ModelState.AddModelError(string.Empty, "Incorrect password.");
                     }
                 }
-
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Email address does not exist.");
+                }
             }
 
             return View(model);

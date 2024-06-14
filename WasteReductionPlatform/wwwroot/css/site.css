@@ -94,3 +94,12 @@ body {
 .btn-block {
     border-radius: 0.5rem;
 }
+/* Increase specificity if needed to override Bootstrap */
+input.input-validation-error, select.input-validation-error {
+    border-color: red !important; /* Use !important to ensure override */
+}
+
+    input.input-validation-error:focus, select.input-validation-error:focus {
+        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25); /* Red focus border */
+    }
+

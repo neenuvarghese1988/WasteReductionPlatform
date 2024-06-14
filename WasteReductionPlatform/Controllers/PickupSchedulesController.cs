@@ -33,17 +33,30 @@ namespace WasteReductionPlatform.Controllers
         {
             if (ModelState.IsValid)
             {
-                var schedule = new PickupSchedule
+                // Server-side validation for pickup date
+                if (model.PickupDate < DateTime.Today)
                 {
-                    PickupDate = model.PickupDate,
-                    PickupType = model.PickupType,
-                    UserType = model.UserType,
-                    Area = model.Area
-                };
-                _context.Add(schedule);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    ModelState.AddModelError("PickupDate", "Pickup date must not be in the past.");
+                }
+                if (ModelState.IsValid)
+                {
+
+                    var schedule = new PickupSchedule
+                    {
+                        PickupDate = model.PickupDate,
+                        PickupType = model.PickupType,
+                        UserType = model.UserType,
+                        Area = model.Area
+                    };
+
+                    _context.Add(schedule);
+                    await _context.SaveChangesAsync();
+
+                    TempData["Success"] = "Pickup schedule created successfully.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            TempData["Error"] = "Failed to create pickup schedule. Please check the form for errors.";
             return View(model);
         }
 
@@ -81,29 +94,40 @@ namespace WasteReductionPlatform.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                // Server-side validation for pickup date
+                if (model.PickupDate < DateTime.Today)
                 {
-                    var schedule = await _context.PickupSchedules.FindAsync(id);
-                    schedule.PickupDate = model.PickupDate;
-                    schedule.PickupType = model.PickupType;
-                    schedule.UserType = model.UserType;
-                    schedule.Area = model.Area;
-                    _context.Update(schedule);
-                    await _context.SaveChangesAsync();
+                    ModelState.AddModelError("PickupDate", "Pickup date must not be in the past.");
                 }
-                catch (DbUpdateConcurrencyException)
+                if (ModelState.IsValid)
                 {
-                    if (!PickupScheduleExists(model.Id))
+                    try
                     {
-                        return NotFound();
+                        var schedule = await _context.PickupSchedules.FindAsync(id);
+                        schedule.PickupDate = model.PickupDate;
+                        schedule.PickupType = model.PickupType;
+                        schedule.UserType = model.UserType;
+                        schedule.Area = model.Area;
+                        _context.Update(schedule);
+                        await _context.SaveChangesAsync();
+
+                        TempData["Success"] = "Pickup schedule updated successfully.";
+                        return RedirectToAction(nameof(Index));
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!PickupScheduleExists(model.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+            TempData["Error"] = "Failed to update pickup schedule. Please check the form for errors.";
             return View(model);
         }
 
@@ -124,24 +148,32 @@ namespace WasteReductionPlatform.Controllers
             return View(schedule);
         }
 
-        // POST: PickupSchedules/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var schedule = await _context.PickupSchedules.FindAsync(id);
             if (schedule != null)
             {
                 _context.PickupSchedules.Remove(schedule);
                 await _context.SaveChangesAsync();
+                //TempData["Success"] = "Pickup schedule deleted successfully.";
+            }
+            else
+            {
+               // TempData["Error"] = "Failed to delete pickup schedule. It may have already been removed.";
             }
             return RedirectToAction(nameof(Index));
         }
+
+
 
         private bool PickupScheduleExists(int id)
         {
             return _context.PickupSchedules.Any(e => e.Id == id);
         }
+
         [Authorize]
         public async Task<IActionResult> Schedule()
         {
@@ -167,6 +199,5 @@ namespace WasteReductionPlatform.Controllers
             // Implement logic to handle the pickup request, e.g., save a record of the request
             return RedirectToAction(nameof(Schedule));
         }
-
     }
 }

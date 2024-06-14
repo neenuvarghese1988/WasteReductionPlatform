@@ -63,7 +63,7 @@ namespace WasteReductionPlatform.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PickupDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PickupType = table.Column<int>(type: "int", nullable: false),
+                    PickupType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserType = table.Column<int>(type: "int", nullable: false),
                     Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsConfirmed = table.Column<bool>(type: "bit", nullable: false)
@@ -188,7 +188,7 @@ namespace WasteReductionPlatform.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
-                    WasteType = table.Column<int>(type: "int", nullable: false),
+                    WasteType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

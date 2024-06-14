@@ -6,49 +6,102 @@
 
 <h1>Register</h1>
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
+<!-- Validation Summary for Model Errors -->
+<div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
 <form asp-action="Register">
+    <!-- Email Field -->
     <div class="form-group">
         <label asp-for="Email"></label>
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+
+    <!-- Password Field -->
     <div class="form-group">
         <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" />
+        <input asp-for="Password" class="form-control" type="password" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
+
+    <!-- Confirm Password Field -->
     <div class="form-group">
         <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" class="form-control" />
+        <input asp-for="ConfirmPassword" class="form-control" type="password" />
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
+
+    <!-- User Type Dropdown -->
     <div class="form-group">
         <label asp-for="UserType"></label>
         <select asp-for="UserType" class="form-control">
+            <option value="">-- Select --</option>
             <option value="Residential">Residential</option>
             <option value="Commercial">Commercial</option>
         </select>
         <span asp-validation-for="UserType" class="text-danger"></span>
     </div>
+
+    <!-- Street Address Field -->
     <div class="form-group">
         <label asp-for="StreetAddress"></label>
         <input asp-for="StreetAddress" class="form-control" />
         <span asp-validation-for="StreetAddress" class="text-danger"></span>
     </div>
+
+    <!-- City Field -->
     <div class="form-group">
         <label asp-for="City"></label>
         <input asp-for="City" class="form-control" />
         <span asp-validation-for="City" class="text-danger"></span>
     </div>
+
+    <!-- Province Dropdown -->
     <div class="form-group">
         <label asp-for="Province"></label>
-        <input asp-for="Province" class="form-control" />
+        <select asp-for="Province" class="form-control">
+            <option value="">-- Select Province --</option>
+            <option value="AB">Alberta</option>
+            <option value="BC">British Columbia</option>
+            <option value="MB">Manitoba</option>
+            <option value="NB">New Brunswick</option>
+            <option value="NL">Newfoundland and Labrador</option>
+            <option value="NS">Nova Scotia</option>
+            <option value="ON">Ontario</option>
+            <option value="PE">Prince Edward Island</option>
+            <option value="QC">Quebec</option>
+            <option value="SK">Saskatchewan</option>
+            <option value="NT">Northwest Territories</option>
+            <option value="NU">Nunavut</option>
+            <option value="YT">Yukon</option>
+        </select>
         <span asp-validation-for="Province" class="text-danger"></span>
     </div>
+
+    <!-- Postal Code Field -->
     <div class="form-group">
         <label asp-for="PostalCode"></label>
         <input asp-for="PostalCode" class="form-control" />
         <span asp-validation-for="PostalCode" class="text-danger"></span>
     </div>
+
+    <!-- Register Button -->
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
+
+<!-- Link to Login Page -->
+<div class="mt-3">
+    <p>Already registered? <a asp-action="Login">Log In</a></p> 
+</div>
