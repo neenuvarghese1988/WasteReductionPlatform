@@ -52,7 +52,7 @@ namespace WasteReductionPlatform.Controllers
                     _context.Add(schedule);
                     await _context.SaveChangesAsync();
 
-                    TempData["Success"] = "Pickup schedule created successfully.";
+                  //  TempData["Success"] = "Pickup schedule created successfully.";
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -111,7 +111,7 @@ namespace WasteReductionPlatform.Controllers
                         _context.Update(schedule);
                         await _context.SaveChangesAsync();
 
-                        TempData["Success"] = "Pickup schedule updated successfully.";
+                     //   TempData["Success"] = "Pickup schedule updated successfully.";
                         return RedirectToAction(nameof(Index));
                     }
                     catch (DbUpdateConcurrencyException)

@@ -1,16 +1,117 @@
-﻿@{
+﻿@model List<WasteReductionPlatform.Models.EducationalResource>
+
+@{
     ViewData["Title"] = "Educational Resources";
 }
 
 <h1>Educational Resources</h1>
 
-<p>Here are some resources to help you understand waste management and recycling practices:</p>
+<div class="row">
+    <div class="col-md-8">
+        <h2>Notes on Waste Reduction and Management</h2>
+        <p>
+            Reducing waste is crucial for a sustainable future. Here are some tips to help you get started:
+        </p>
+        <ul>
+            <li>Practice the 3 R's: Reduce, Reuse, and Recycle.</li>
+            <li>Avoid single-use plastics and opt for reusable alternatives.</li>
+            <li>Compost your organic waste to create nutrient-rich soil.</li>
+            <li>Donate or sell items you no longer need instead of throwing them away.</li>
+            <li>Support businesses that prioritize sustainability and waste reduction.</li>
+        </ul>
+        <p>
+            By making small changes in our daily lives, we can significantly reduce our environmental impact and create a cleaner, greener world for future generations.
+        </p>
+    </div>
+</div>
 
-<ul>
-    <li><a href="https://www.canada.ca/en/services/environment/conservation.html" target="_blank">Government of Canada - Conservation</a></li>
-    <li><a href="https://www.recyclingcouncil.org/" target="_blank">Recycling Council of Ontario</a></li>
-    <li><a href="https://www.ecojustice.ca/" target="_blank">Ecojustice Canada</a></li>
-    <li><a href="https://www.environmentaldefence.ca/" target="_blank">Environmental Defence</a></li>
-    <li><a href="https://earth911.com/" target="_blank">Earth911</a></li>
-    <li><a href="https://www.nrdc.org/" target="_blank">Natural Resources Defense Council</a></li>
-</ul>
+<div class="row">
+    <div class="col-md-8">
+        <h2>Videos on Waste Reduction and Management</h2>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/6jQ7y_qQYUA" allowfullscreen></iframe>
+        </div>
+        <p>
+            This informative video from National Geographic explores the global waste crisis and offers practical solutions for individuals and communities to reduce their waste footprint.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Downloadable Resources</h2>
+        <p>Check out these helpful resources for more information on waste reduction and management:</p>
+        <ul>
+            <li>
+                <a href="/files/resource1.pdf" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Waste Reduction Guide (PDF)
+                </a>
+            </li>
+            <li>
+                <a href="/files/resource2.jpg" target="_blank">
+                    <i class="fas fa-image"></i> Recycling Infographic (JPG)
+                </a>
+            </li>
+            <li>
+                <a href="https://www.almostzerowaste.com/zero-waste-books/" target="_blank">
+                    <i class="fas fa-book"></i> Zero Waste Living (EPUB)
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Featured Podcast Episode</h2>
+        <p>Listen to this insightful episode on the importance of waste reduction:</p>
+        <div class="embed-responsive embed-responsive-16by9">
+            <audio class="embed-responsive-item" controls>
+                <source src="/files/podcast-episode.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <p>
+            Tom Heap and Helen Czerski dig deeper into the biggest environmental issues on the planet. In this episode they ask why we're so rubbish at tackling waste.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Request Waste Reduction Tips</h2>
+        <p>If you would like personalized tips on how to reduce waste, click the button below to request tips from our experts.</p>
+        <button id="requestTipsButton" class="btn btn-primary">Request Tips</button>
+        <div id="tipsRequestConfirmation" class="mt-3" style="display: none;">
+            <div class="alert alert-success" role="alert">
+                Your request for waste reduction tips has been submitted! We will get back to you soon.
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#requestTipsButton').click(function () {
+                // AJAX call to backend to handle request
+                $.ajax({
+                    url: '@Url.Action("RequestTips", "EducationalResources")', // URL to the controller action
+                    type: 'POST',
+                    success: function (response) {
+                        // Show confirmation message
+                        $('#tipsRequestConfirmation').show();
+                    },
+                    error: function () {
+                        alert('There was an error processing your request. Please try again later.');
+                    }
+                });
+            });
+        });
+    </script>
+}

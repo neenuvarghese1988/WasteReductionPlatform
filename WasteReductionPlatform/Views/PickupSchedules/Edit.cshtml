@@ -8,12 +8,12 @@
 
 <form asp-action="Edit">
     <div class="form-group">
-        <label asp-for="PickupDate"></label>
+        <label asp-for="PickupDate">Pickup Date</label>
         <input asp-for="PickupDate" class="form-control" />
         <span asp-validation-for="PickupDate" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="UserType"></label>
+        <label asp-for="UserType">User Type</label>
         <select asp-for="UserType" class="form-control" id="UserType">
             <option value="Residential">Residential</option>
             <option value="Commercial">Commercial</option>
@@ -21,7 +21,7 @@
         <span asp-validation-for="UserType" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="PickupType"></label>
+        <label asp-for="PickupType">Pickup Type</label>
         <select asp-for="PickupType" class="form-control" id="PickupType">
             <!-- Default options will be populated by JavaScript based on UserType -->
         </select>
