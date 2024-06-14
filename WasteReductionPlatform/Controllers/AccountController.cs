@@ -5,14 +5,19 @@ using WasteReductionPlatform.Models;
 using WasteReductionPlatform.ViewModels;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Text.Encodings.Web;
+using Humanizer;
+using System.Drawing.Drawing2D;
 
 namespace WasteReductionPlatform.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly IEmailSender _emailSender;
+		//Manages user-related operations like creating, updating, and finding users. It's part of ASP.NET Core Identity.
+		private readonly UserManager<User> _userManager;
+		//Manages sign-in operations, such as checking passwords and signing users in or out.
+		private readonly SignInManager<User> _signInManager;
+		//it's used for sending email confirmation links to users.
+		private readonly IEmailSender _emailSender;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
         {
@@ -23,14 +28,26 @@ namespace WasteReductionPlatform.Controllers
 
         [HttpGet]
         public IActionResult Register()
-        {
-            return View();
-        }
+		{
+			return View();
+		}
 
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
+		//asynchronous operation- Allows to perform operations without blocking the main thread, making the application more responsive,
+		//especially during I/O-bound operations like sending emails or database access.
+
+		/// <summary>
+		/// Handles the registration of a new user.
+		/// - Creates a new user account.
+		/// - Adds the user to the "User" role.
+		/// - Sends an email confirmation link.
+		/// - Redirects to the login page with a success message or shows errors if the registration fails.
+		/// POST: /Account/Register
+		/// </summary>
+		[HttpPost]
+
+		public async Task<IActionResult> Register(RegisterViewModel model)
+		{
+			if (ModelState.IsValid)
             {
                 var user = new User
                 {
@@ -42,9 +59,9 @@ namespace WasteReductionPlatform.Controllers
                     Province = model.Province,
                     PostalCode = model.PostalCode
                 };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);//await these tasks to continue execution only after these operations complete.
 
-                if (result.Succeeded)
+				if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
 
@@ -67,7 +84,14 @@ namespace WasteReductionPlatform.Controllers
             return View(model);
         }
 
-        [HttpGet]
+		/// <summary>
+		/// Confirms the user's email address.
+		/// - Validates the confirmation token.
+		/// - If successful, marks the email as confirmed and redirects to the login page with a success message.
+		/// - If unsuccessful, shows an error message.
+		/// GET: /Account/ConfirmEmail
+		/// </summary>
+		[HttpGet]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -98,7 +122,15 @@ namespace WasteReductionPlatform.Controllers
             return View();
         }
 
-        [HttpPost]
+		/// <summary>
+		/// Handles user login.
+		/// - Checks if the user exists and if the email is confirmed.
+		/// - Attempts to sign the user in.
+		/// - Redirects to the appropriate dashboard based on the user's role.
+		/// - Shows error messages if login fails.
+		/// POST: /Account/Login
+		/// </summary>
+		[HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)

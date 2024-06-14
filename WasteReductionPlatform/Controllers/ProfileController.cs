@@ -76,21 +76,22 @@ public class ProfileController : Controller
     private void PopulateProvinces(string selectedProvince)
     {
         var provinces = new List<SelectListItem>
-    {
-        new SelectListItem { Value = "Alberta", Text = "Alberta" },
-        new SelectListItem { Value = "British Columbia", Text = "British Columbia" },
-        new SelectListItem { Value = "Manitoba", Text = "Manitoba" },
-        new SelectListItem { Value = "New Brunswick", Text = "New Brunswick" },
-        new SelectListItem { Value = "Newfoundland and Labrador", Text = "Newfoundland and Labrador" },
-        new SelectListItem { Value = "Nova Scotia", Text = "Nova Scotia" },
-        new SelectListItem { Value = "Ontario", Text = "Ontario" },
-        new SelectListItem { Value = "Prince Edward Island", Text = "Prince Edward Island" },
-        new SelectListItem { Value = "Quebec", Text = "Quebec" },
-        new SelectListItem { Value = "Saskatchewan", Text = "Saskatchewan" },
-        new SelectListItem { Value = "Northwest Territories", Text = "Northwest Territories" },
-        new SelectListItem { Value = "Nunavut", Text = "Nunavut" },
-        new SelectListItem { Value = "Yukon", Text = "Yukon" }
-    };
+{
+    new SelectListItem { Value = "AB", Text = "Alberta" },
+    new SelectListItem { Value = "BC", Text = "British Columbia" },
+    new SelectListItem { Value = "MB", Text = "Manitoba" },
+    new SelectListItem { Value = "NB", Text = "New Brunswick" },
+    new SelectListItem { Value = "NL", Text = "Newfoundland and Labrador" },
+    new SelectListItem { Value = "NS", Text = "Nova Scotia" },
+    new SelectListItem { Value = "ON", Text = "Ontario" },
+    new SelectListItem { Value = "PE", Text = "Prince Edward Island" },
+    new SelectListItem { Value = "QC", Text = "Quebec" },
+    new SelectListItem { Value = "SK", Text = "Saskatchewan" },
+    new SelectListItem { Value = "NT", Text = "Northwest Territories" },
+    new SelectListItem { Value = "NU", Text = "Nunavut" },
+    new SelectListItem { Value = "YT", Text = "Yukon" }
+};
+
 
         ViewBag.Provinces = new SelectList(provinces, "Value", "Text", selectedProvince);
     }

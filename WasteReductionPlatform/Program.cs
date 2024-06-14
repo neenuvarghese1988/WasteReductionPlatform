@@ -119,19 +119,20 @@ namespace WasteReductionPlatform
                 {
                     adminUser = new User
                     {
-                        UserName = "admin@example.com",
-                        Email = "admin@example.com",
+                        UserName = "admin@gmail.com",
+                        Email = "admin@gmail.com",
                         IsAdmin = true,
                         UserType = UserType.Residential,
-                        StreetAddress = "123 Admin St",
-                        City = "Admin City",
-                        Province = "Admin Province",
-                        PostalCode = "A1A1A1",
+                        StreetAddress = "123 Thorndale St",
+                        City = "Waterloo",
+                        Province = "ON",
+                        PostalCode = "N2T 0A9",
                         EmailConfirmed = true // Confirm email here
                     };
                     
                     var result = await userManager.CreateAsync(adminUser, "Admin@123");
                     if (result.Succeeded)
+
                     {
                         await userManager.AddToRoleAsync(adminUser, "Admin");
                         logger.LogInformation("Admin user created and assigned to 'Admin' role.");
