@@ -21,7 +21,7 @@ namespace WasteReductionPlatform
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+               // options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = true;
@@ -99,63 +99,85 @@ namespace WasteReductionPlatform
 
             string[] roles = { "Admin", "User" };
 
-            try
+            foreach (var role in roles)
             {
-                // Create roles if they do not exist
-                foreach (var role in roles)
+                if (!await roleManager.RoleExistsAsync(role))
                 {
-                    if (!await roleManager.RoleExistsAsync(role))
-                    {
-                        await roleManager.CreateAsync(new IdentityRole(role));
-                        logger.LogInformation($"Role '{role}' created successfully.");
-                    }
-                }
-
-                // Create admin user if it does not exist
-                var adminEmail = "admin@example.com";
-
-                var adminUser = await userManager.FindByEmailAsync(adminEmail);
-                if (adminUser == null)
-                {
-                    adminUser = new User
-                    {
-                        UserName = "admin@gmail.com",
-                        Email = "admin@gmail.com",
-                        IsAdmin = true,
-                        UserType = UserType.Residential,
-                        StreetAddress = "123 Thorndale St",
-                        City = "Waterloo",
-                        Province = "ON",
-                        PostalCode = "N2T 0A9",
-                        EmailConfirmed = true // Confirm email here
-                    };
-                    
-                    var result = await userManager.CreateAsync(adminUser, "Admin@123");
-                    if (result.Succeeded)
-
-                    {
-                        await userManager.AddToRoleAsync(adminUser, "Admin");
-                        logger.LogInformation("Admin user created and assigned to 'Admin' role.");
-                    }
-                    else
-                    {
-                        logger.LogError($"Failed to create admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
-                    }
-                }
-                else if (!adminUser.EmailConfirmed)
-                {
-                    adminUser.EmailConfirmed = true;
-                    await userManager.UpdateAsync(adminUser);
-                }
-                else
-                {
-                    logger.LogInformation("Admin user already exists.");
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                    logger.LogInformation($"Role '{role}' created successfully.");
                 }
             }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred during the role and admin user initialization.");
-            }
+
+            // Optionally remove admin creation from here
         }
+
+
+        //private static async Task InitializeRolesAndAdminAsync(WebApplication app)
+        //{
+        //    using var scope = app.Services.CreateScope();
+        //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        //    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+        //    string[] roles = { "Admin", "User" };
+
+        //    try
+        //    {
+        //        // Create roles if they do not exist
+        //        foreach (var role in roles)
+        //        {
+        //            if (!await roleManager.RoleExistsAsync(role))
+        //            {
+        //                await roleManager.CreateAsync(new IdentityRole(role));
+        //                logger.LogInformation($"Role '{role}' created successfully.");
+        //            }
+        //        }
+
+        //        // Create admin user if it does not exist
+        //        var adminEmail = "admin@example.com";
+
+        //        var adminUser = await userManager.FindByEmailAsync(adminEmail);
+        //        if (adminUser == null)
+        //        {
+        //            adminUser = new User
+        //            {
+        //                UserName = "admin@gmail.com",
+        //                Email = "admin@gmail.com",
+        //                IsAdmin = true,
+        //                UserType = UserType.Residential,
+        //                StreetAddress = "123 Thorndale St",
+        //                City = "Waterloo",
+        //                Province = "ON",
+        //                PostalCode = "N2T 0A9",
+        //                EmailConfirmed = true // Confirm email here
+        //            };
+
+        //            var result = await userManager.CreateAsync(adminUser, "Admin@123");
+        //            if (result.Succeeded)
+
+        //            {
+        //                await userManager.AddToRoleAsync(adminUser, "Admin");
+        //                logger.LogInformation("Admin user created and assigned to 'Admin' role.");
+        //            }
+        //            else
+        //            {
+        //                logger.LogError($"Failed to create admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+        //            }
+        //        }
+        //        else if (!adminUser.EmailConfirmed)
+        //        {
+        //            adminUser.EmailConfirmed = true;
+        //            await userManager.UpdateAsync(adminUser);
+        //        }
+        //        else
+        //        {
+        //            logger.LogInformation("Admin user already exists.");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.LogError(ex, "An error occurred during the role and admin user initialization.");
+        //    }
+        //}
     }
 }

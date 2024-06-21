@@ -5,9 +5,9 @@ namespace WasteReductionPlatform.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid email address.")]
-        public string Email { get; set; }
+        //[Required(ErrorMessage = "Email is required.")]
+        //[EmailAddress(ErrorMessage = "Invalid email address.")]
+      //  public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
@@ -33,5 +33,10 @@ namespace WasteReductionPlatform.ViewModels
         [Required(ErrorMessage = "Postal code is required.")]
         [RegularExpression(@"^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$", ErrorMessage = "Invalid postal code format.")]
         public string PostalCode { get; set; }
+
+        [Required(ErrorMessage = "Username is required.")]
+        public string Username { get; set; }
+        [Required]
+        public string Role { get; set; } // Add role selection
     }
 }

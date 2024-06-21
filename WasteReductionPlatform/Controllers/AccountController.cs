@@ -45,52 +45,52 @@ namespace WasteReductionPlatform.Controllers
 		/// </summary>
 		[HttpPost]
 
-		public async Task<IActionResult> Register(RegisterViewModel model)
-		{
-			if (ModelState.IsValid)
-            {
-                // Validate email format and domain
-                var emailPattern = @"^[^@\s]+@gmail\.com$";
-                if (!System.Text.RegularExpressions.Regex.IsMatch(model.Email, emailPattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
-                {
-                    ModelState.AddModelError("Email", "Invalid email address. Only Gmail addresses are allowed.");
-                    return View(model);
-                }
+		//public async Task<IActionResult> Register(RegisterViewModel model)
+		//{
+		//	if (ModelState.IsValid)
+  //          {
+  //              // Validate email format and domain
+  //              var emailPattern = @"^[^@\s]+@gmail\.com$";
+  //              if (!System.Text.RegularExpressions.Regex.IsMatch(model.Email, emailPattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+  //              {
+  //                  ModelState.AddModelError("Email", "Invalid email address. Only Gmail addresses are allowed.");
+  //                  return View(model);
+  //              }
 
-                var user = new User
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    UserType = model.UserType,
-                    StreetAddress = model.StreetAddress,
-                    City = model.City,
-                    Province = model.Province,
-                    PostalCode = model.PostalCode
-                };
-                var result = await _userManager.CreateAsync(user, model.Password);//await these tasks to continue execution only after these operations complete.
+  //              var user = new User
+  //              {
+  //                  UserName = model.Email,
+  //                  Email = model.Email,
+  //                  UserType = model.UserType,
+  //                  StreetAddress = model.StreetAddress,
+  //                  City = model.City,
+  //                  Province = model.Province,
+  //                  PostalCode = model.PostalCode
+  //              };
+  //              var result = await _userManager.CreateAsync(user, model.Password);//await these tasks to continue execution only after these operations complete.
 
-				if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, "User");
+		//		if (result.Succeeded)
+  //              {
+  //                  await _userManager.AddToRoleAsync(user, "User");
 
-                    // Send email confirmation link
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, code }, protocol: Request.Scheme);
-                    await _emailSender.SendEmailAsync(model.Email, "Confirm your email",
-                        $"Please confirm your account by clicking <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>here</a>.");
+  //                  // Send email confirmation link
+  //                  var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+  //                  var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, code }, protocol: Request.Scheme);
+  //                  await _emailSender.SendEmailAsync(model.Email, "Confirm your email",
+  //                      $"Please confirm your account by clicking <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>here</a>.");
 
-                    TempData["Success"] = "Registration successful. Please check your email to confirm your account.";
-                    return RedirectToAction("Login", "Account");
-                }
+  //                  TempData["Success"] = "Registration successful. Please check your email to confirm your account.";
+  //                  return RedirectToAction("Login", "Account");
+  //              }
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
+  //              foreach (var error in result.Errors)
+  //              {
+  //                  ModelState.AddModelError(string.Empty, error.Description);
+  //              }
+  //          }
 
-            return View(model);
-        }
+  //          return View(model);
+  //      }
 
 		/// <summary>
 		/// Confirms the user's email address.
@@ -139,48 +139,48 @@ namespace WasteReductionPlatform.Controllers
 		/// POST: /Account/Login
 		/// </summary>
 		[HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Check if user exists by email
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user != null)
-                {
+        //public async Task<IActionResult> Login(LoginViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Check if user exists by email
+        //        var user = await _userManager.FindByEmailAsync(model.Email);
+        //        if (user != null)
+        //        {
 
-                    // Check if email is confirmed
-                    if (!user.EmailConfirmed)
-                    {
-                        ModelState.AddModelError(string.Empty, "Please confirm your email before logging in.");
-                        return View(model);
-                    }
+        //            // Check if email is confirmed
+        //            if (!user.EmailConfirmed)
+        //            {
+        //                ModelState.AddModelError(string.Empty, "Please confirm your email before logging in.");
+        //                return View(model);
+        //            }
 
-                    // Try to sign in
-                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
-                    if (result.Succeeded)
-                    {
-                        if (await _userManager.IsInRoleAsync(user, "Admin"))
-                        {
-                            return RedirectToAction("Index", "AdminDashboard");
-                        }
-                        else
-                        {
-                            return RedirectToAction("Index", "UserDashboard");
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Incorrect password.");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Email address does not exist.");
-                }
-            }
+        //            // Try to sign in
+        //            var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+        //            if (result.Succeeded)
+        //            {
+        //                if (await _userManager.IsInRoleAsync(user, "Admin"))
+        //                {
+        //                    return RedirectToAction("Index", "AdminDashboard");
+        //                }
+        //                else
+        //                {
+        //                    return RedirectToAction("Index", "UserDashboard");
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError(string.Empty, "Incorrect password.");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError(string.Empty, "Email address does not exist.");
+        //        }
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Logout()
