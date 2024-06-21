@@ -10,7 +10,7 @@ namespace WasteReductionPlatform.Models
         public string UserId { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+         [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
 
         [Required]

@@ -20,7 +20,7 @@ namespace WasteReductionPlatform.ViewModels
         [Required(ErrorMessage = "Please select a type of waste.")]
         public string WasteType { get; set; }
 
-        public List<string> WasteTypes { get; set; }
+        public List<string> WasteTypes { get; set; } = new List<string>();
 
         //  [Required(ErrorMessage = "User type is required.")]
         public UserType? UserType { get; set; }

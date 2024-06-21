@@ -6,6 +6,7 @@ using WasteReductionPlatform.Data;
 using WasteReductionPlatform.Models;
 using WasteReductionPlatform.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WasteReductionPlatform.Controllers
 {
@@ -108,6 +109,7 @@ namespace WasteReductionPlatform.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(WasteLogViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
                
@@ -125,8 +127,10 @@ namespace WasteReductionPlatform.Controllers
                     TempData["Success"] = "Waste log created successfully.";
                     return RedirectToAction(nameof(Index));
                 }
-            
-           // TempData["Error"] = "Failed to create waste log. Please check the form for errors.";
+
+            // TempData["Error"] = "Failed to create waste log. Please check the form for errors.";
+            // Repopulate WasteTypes if the form submission fails
+            model.WasteTypes = GetWasteTypes(model.UserType.ToString());
             return View(model);
         }
 
