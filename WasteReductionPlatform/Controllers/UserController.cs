@@ -8,6 +8,7 @@ using System.Text.Encodings.Web;
 using Humanizer;
 using System.Drawing.Drawing2D;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WasteReductionPlatform.Controllers
 {
@@ -33,29 +34,38 @@ namespace WasteReductionPlatform.Controllers
             return View();
         }
 
-        //asynchronous operation- Allows to perform operations without blocking the main thread, making the application more responsive,
-        //especially during I/O-bound operations like sending emails or database access.
+		//asynchronous operation- Allows to perform operations without blocking the main thread, making the application more responsive,
+		//especially during I/O-bound operations like sending emails or database access.
 
-        
-        [HttpPost]
+		
+		[HttpPost]
 
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+			//if (model.Role == "Admin")
+			//{
+			//	model.UserType = UserType.Residential;
+			//	// Clear the model state to update it
+			//	ModelState.Clear();
 
-            if (ModelState.IsValid)
+			//	// Revalidate specific fields if necessary
+			//	TryValidateModel(model);
+			//}
+
+			if (ModelState.IsValid)
             {
-                // Additional check to restrict multiple admin creation
-                var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
-                if (model.Role == "Admin" && adminUsers.Count > 0)
-                {
-                    ModelState.AddModelError("", "An admin account already exists. Additional admin accounts require approval.");
-                    return View(model);
-                }
+                //// Additional check to restrict multiple admin creation
+                //var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
+                //if (model.Role == "Admin" && adminUsers.Count > 0)
+                //{
+                //    ModelState.AddModelError("", "An admin account already exists. Additional admin accounts require approval.");
+                //    return View(model);
+                //}
 
                 var user = new User
                 {
                     UserName = model.Username,
-                    IsAdmin = model.Role == "Admin",
+                    //IsAdmin = model.Role == "Admin",
                     UserType = model.UserType,
                     StreetAddress = model.StreetAddress,
                     City = model.City,
@@ -66,7 +76,7 @@ namespace WasteReductionPlatform.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, model.Role);
+                   // await _userManager.AddToRoleAsync(user, model.Role);
 
                     TempData["Success"] = "Registration successful.";
                     return RedirectToAction("Login", "User");

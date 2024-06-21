@@ -7,7 +7,7 @@ namespace WasteReductionPlatform.ViewModels
     {
         //[Required(ErrorMessage = "Email is required.")]
         //[EmailAddress(ErrorMessage = "Invalid email address.")]
-      //  public string Email { get; set; }
+        //  public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
@@ -36,16 +36,17 @@ namespace WasteReductionPlatform.ViewModels
 
         [Required(ErrorMessage = "Username is required.")]
         public string Username { get; set; }
-        [Required]
-        public string Role { get; set; } // Add role selection
+       // [Required]
+        //      public string Role { get; set; } // Add role selection
 
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (Role != "Admin" && !UserType.HasValue)
-            {
-                yield return new ValidationResult("User Type is required for non-admin users.", new[] { "UserType" });
-            }
-        }
+        //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        //{
+        //	if (Role != "Admin" && !UserType.HasValue)
+        //	{
+        //		yield return new ValidationResult("User Type is required for non-admin users.", new[] { "UserType" });
+        //	}
+        //}
     }
 }
+

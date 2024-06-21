@@ -27,6 +27,7 @@ namespace WasteReductionPlatform.Models
         public string PostalCode { get; set; }
 
         public ICollection<WasteLog> WasteLogs { get; set; }
+
     }
 
     public enum UserType
