@@ -49,6 +49,14 @@ namespace WasteReductionPlatform.Controllers
 		{
 			if (ModelState.IsValid)
             {
+                // Validate email format and domain
+                var emailPattern = @"^[^@\s]+@gmail\.com$";
+                if (!System.Text.RegularExpressions.Regex.IsMatch(model.Email, emailPattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                {
+                    ModelState.AddModelError("Email", "Invalid email address. Only Gmail addresses are allowed.");
+                    return View(model);
+                }
+
                 var user = new User
                 {
                     UserName = model.Email,

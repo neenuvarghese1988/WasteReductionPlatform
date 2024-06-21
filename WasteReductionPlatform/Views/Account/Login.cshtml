@@ -10,6 +10,8 @@
 {
     <div class="alert alert-success" role="alert">
         @TempData["Success"]
+        <br />
+        <a asp-controller="Account" asp-action="Register">(Change)</a>
     </div>
 }
 @if (TempData["Error"] != null)

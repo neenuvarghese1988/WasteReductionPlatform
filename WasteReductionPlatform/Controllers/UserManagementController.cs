@@ -44,15 +44,17 @@ public class UserManagementController : Controller
 	/// <param name="id">The ID of the user to edit.</param>
 	/// <param name="model">The User model with updated data.</param>
 	/// <returns>The Index view if update succeeds, or the Edit view with validation errors.</returns>
-	[HttpPost]
+    [HttpPost]
     public async Task<IActionResult> Edit(string id, User model)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return NotFound();
+            TempData["Error"] = "User not found.";
+            return RedirectToAction(nameof(Index));
         }
 
+        // Update user details
         user.Email = model.Email;
         user.UserName = model.Email;
         user.StreetAddress = model.StreetAddress;
@@ -64,11 +66,18 @@ public class UserManagementController : Controller
         var result = await _userManager.UpdateAsync(user);
         if (result.Succeeded)
         {
+            TempData["Success"] = "User details updated successfully.";
             return RedirectToAction(nameof(Index));
         }
 
-        PopulateProvinces(model.Province); // Repopulate provinces in case of validation error
+        // Handle errors during update
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
 
+        TempData["Error"] = "Failed to update user details. Please check the form for errors.";
+        PopulateProvinces(model.Province); // Repopulate provinces in case of validation error
         return View(model);
     }
 

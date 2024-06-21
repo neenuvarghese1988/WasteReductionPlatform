@@ -27,13 +27,13 @@
         <span asp-validation-for="Date" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Weight"></label>
+        <label asp-for="Weight">Weight (kg)</label>
         <input asp-for="Weight" class="form-control" />
         <span asp-validation-for="Weight" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="UserType"></label>
-        <select asp-for="UserType" class="form-control" id="UserType">
+        <select asp-for="UserType" class="form-control" disabled>
             <option value="Residential">Residential</option>
             <option value="Commercial">Commercial</option>
         </select>
@@ -42,66 +42,13 @@
     <div class="form-group">
         <label asp-for="WasteType"></label>
         <select asp-for="WasteType" class="form-control" id="WasteType">
-            <!-- Options will be populated by JavaScript -->
+            @foreach (var type in Model.WasteTypes)
+            {
+                <option value="@type">@type</option>
+            }
         </select>
         <span asp-validation-for="WasteType" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Log Waste</button>
 </form>
 
-@section Scripts {
-    <script>
-        // Define residential and commercial waste types
-        const residentialWasteTypes = [
-            { value: "BlueBox", text: "Blue Box (Recyclables)" },
-            { value: "GreenCart", text: "Green Cart (Organic Waste)" },
-            { value: "Garbage", text: "Garbage" },
-            { value: "Bulk", text: "Bulk Waste" },
-            { value: "Hazardous", text: "Hazardous Waste" }
-        ];
-
-        const commercialWasteTypes = [
-            { value: "GeneralWaste", text: "General Waste (Garbage)" },
-            { value: "PaperAndCardboard", text: "Paper and Cardboard" },
-            { value: "Plastics", text: "Plastics" },
-            { value: "Glass", text: "Glass" },
-            { value: "Metals", text: "Metals" },
-            { value: "OrganicWaste", text: "Organic Waste" },
-            { value: "ConstructionAndDemolition", text: "Construction and Demolition (C&D)" },
-            { value: "ElectronicWaste", text: "Electronic Waste" },
-            { value: "MedicalWaste", text: "Medical and Clinical Waste" },
-            { value: "ConfidentialPaper", text: "Confidential Paper" },
-            { value: "Textiles", text: "Textiles" },
-            { value: "GreaseAndOils", text: "Grease and Oils" },
-            { value: "WoodWaste", text: "Wood Waste" },
-            { value: "ChemicalWaste", text: "Chemical Waste" },
-            { value: "IndustrialWaste", text: "Industrial Waste" }
-        ];
-
-        // Populate waste types based on the selected user type
-        function populateWasteTypes() {
-            const userType = document.getElementById("UserType").value;
-            const pickupType = document.getElementById("WasteType");
-
-            // Clear existing options
-            pickupType.innerHTML = "";
-
-            // Choose the right list of waste types
-            const wasteTypes = userType === "Residential" ? residentialWasteTypes : commercialWasteTypes;
-
-            // Populate the pickup type dropdown
-            wasteTypes.forEach(type => {
-                const option = document.createElement("option");
-                option.value = type.value;
-                option.text = type.text;
-                pickupType.appendChild(option);
-            });
-        }
-
-        // Event listener for user type change
-        document.getElementById("UserType").addEventListener("change", populateWasteTypes);
-
-        // Initialize the pickup type dropdown on page load
-        window.onload = populateWasteTypes;
-    </script>
-}

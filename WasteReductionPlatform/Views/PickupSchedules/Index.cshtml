@@ -6,6 +6,19 @@
 
 <h1>Pickup Schedules</h1>
 
+<!-- TempData Messages -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+} 
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
@@ -15,7 +28,7 @@
             <th>Pickup Date</th>
             <th>Pickup Type</th>
             <th>User Type</th>
-            <th>Area</th>
+            <th>City</th>
             <th></th>
         </tr>
     </thead>

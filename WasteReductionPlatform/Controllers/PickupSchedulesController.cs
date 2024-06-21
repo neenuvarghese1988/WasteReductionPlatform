@@ -38,6 +38,18 @@ namespace WasteReductionPlatform.Controllers
                 {
                     ModelState.AddModelError("PickupDate", "Pickup date must not be in the past.");
                 }
+                // Check if a schedule with the same PickupDate, PickupType, UserType, and Area already exists
+                var existingSchedule = await _context.PickupSchedules
+                    .FirstOrDefaultAsync(s => s.PickupDate == model.PickupDate &&
+                                              s.PickupType == model.PickupType &&
+                                              s.UserType == model.UserType &&
+                                              s.Area == model.Area);
+                if (existingSchedule != null)
+                {
+                    TempData["Error"] = "A schedule with the same details already exists.";
+                    return View(model);
+                }
+
                 if (ModelState.IsValid)
                 {
 
@@ -52,11 +64,11 @@ namespace WasteReductionPlatform.Controllers
                     _context.Add(schedule);
                     await _context.SaveChangesAsync();
 
-                  //  TempData["Success"] = "Pickup schedule created successfully.";
+                   TempData["Success"] = "Pickup schedule created successfully.";
                     return RedirectToAction(nameof(Index));
                 }
             }
-            TempData["Error"] = "Failed to create pickup schedule. Please check the form for errors.";
+          //  TempData["Error"] = "Failed to create pickup schedule. Please check the form for errors.";
             return View(model);
         }
 
@@ -99,6 +111,18 @@ namespace WasteReductionPlatform.Controllers
                 {
                     ModelState.AddModelError("PickupDate", "Pickup date must not be in the past.");
                 }
+
+                //// Check if a schedule with the same PickupDate, PickupType, UserType, and Area already exists
+                //var existingSchedule = await _context.PickupSchedules
+                //    .FirstOrDefaultAsync(s => s.PickupDate == model.PickupDate &&
+                //                              s.PickupType == model.PickupType &&
+                //                              s.UserType == model.UserType &&
+                //                              s.Area == model.Area);
+                //if (existingSchedule != null)
+                //{
+                //    TempData["Error"] = "A schedule with the same details already exists.";
+                //    return View(model);
+                //}
                 if (ModelState.IsValid)
                 {
                     try
@@ -111,7 +135,7 @@ namespace WasteReductionPlatform.Controllers
                         _context.Update(schedule);
                         await _context.SaveChangesAsync();
 
-                     //   TempData["Success"] = "Pickup schedule updated successfully.";
+                       TempData["Success"] = "Pickup schedule updated successfully.";
                         return RedirectToAction(nameof(Index));
                     }
                     catch (DbUpdateConcurrencyException)
@@ -127,7 +151,7 @@ namespace WasteReductionPlatform.Controllers
                     }
                 }
             }
-            TempData["Error"] = "Failed to update pickup schedule. Please check the form for errors.";
+           // TempData["Error"] = "Failed to update pickup schedule. Please check the form for errors.";
             return View(model);
         }
 
@@ -158,11 +182,11 @@ namespace WasteReductionPlatform.Controllers
             {
                 _context.PickupSchedules.Remove(schedule);
                 await _context.SaveChangesAsync();
-                //TempData["Success"] = "Pickup schedule deleted successfully.";
+                TempData["Success"] = "Pickup schedule deleted successfully.";
             }
             else
             {
-               // TempData["Error"] = "Failed to delete pickup schedule. It may have already been removed.";
+               TempData["Error"] = "Failed to delete pickup schedule. It may have already been removed.";
             }
             return RedirectToAction(nameof(Index));
         }

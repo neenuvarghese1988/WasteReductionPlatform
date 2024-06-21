@@ -5,19 +5,12 @@
 }
 
 <h1>Create Pickup Schedule</h1>
-<!-- TempData Messages -->
-@* @if (TempData["Success"] != null)
-{
-    <div class="alert alert-success" role="alert">
-        @TempData["Success"]
-    </div>
-}
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger" role="alert">
         @TempData["Error"]
     </div>
-} *@
+}
 
 <form asp-action="Create">
     <div class="form-group">
@@ -42,7 +35,7 @@
         <span asp-validation-for="PickupType" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Area"></label>
+        <label asp-for="Area">City</label>
         <input asp-for="Area" class="form-control" />
         <span asp-validation-for="Area" class="text-danger"></span>
     </div>
@@ -55,30 +48,31 @@
     <script>
         // Define residential and commercial waste types
         const residentialWasteTypes = [
-            { value: "BlueBox", text: "Blue Box (Recyclables)" },
-            { value: "GreenCart", text: "Green Cart (Organic Waste)" },
+            { value: "Blue Box (Recyclables)", text: "Blue Box (Recyclables)" },
+            { value: "Green Cart (Organic Waste)", text: "Green Cart (Organic Waste)" },
             { value: "Garbage", text: "Garbage" },
-            { value: "Bulk", text: "Bulk Waste" },
-            { value: "Hazardous", text: "Hazardous Waste" }
+            { value: "Bulk Waste", text: "Bulk Waste" },
+            { value: "Hazardous Waste", text: "Hazardous Waste" }
         ];
 
         const commercialWasteTypes = [
-            { value: "GeneralWaste", text: "General Waste (Garbage)" },
-            { value: "PaperAndCardboard", text: "Paper and Cardboard" },
+            { value: "General Waste (Garbage)", text: "General Waste (Garbage)" },
+            { value: "Paper and Cardboard", text: "Paper and Cardboard" },
             { value: "Plastics", text: "Plastics" },
             { value: "Glass", text: "Glass" },
             { value: "Metals", text: "Metals" },
-            { value: "OrganicWaste", text: "Organic Waste" },
-            { value: "ConstructionAndDemolition", text: "Construction and Demolition (C&D)" },
-            { value: "ElectronicWaste", text: "Electronic Waste" },
-            { value: "MedicalWaste", text: "Medical and Clinical Waste" },
-            { value: "ConfidentialPaper", text: "Confidential Paper" },
+            { value: "Organic Waste", text: "Organic Waste" },
+            { value: "Construction and Demolition (C&D)", text: "Construction and Demolition (C&D)" },
+            { value: "Electronic Waste", text: "Electronic Waste" },
+            { value: "Medical and Clinical Waste", text: "Medical and Clinical Waste" },
+            { value: "Confidential Paper", text: "Confidential Paper" },
             { value: "Textiles", text: "Textiles" },
-            { value: "GreaseAndOils", text: "Grease and Oils" },
-            { value: "WoodWaste", text: "Wood Waste" },
-            { value: "ChemicalWaste", text: "Chemical Waste" },
-            { value: "IndustrialWaste", text: "Industrial Waste" }
+            { value: "Grease and Oils", text: "Grease and Oils" },
+            { value: "Wood Waste", text: "Wood Waste" },
+            { value: "Chemical Waste", text: "Chemical Waste" },
+            { value: "Industrial Waste", text: "Industrial Waste" }
         ];
+
 
         // Populate waste types based on the selected user type
         function populateWasteTypes() {

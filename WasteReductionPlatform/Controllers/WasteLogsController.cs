@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WasteReductionPlatform.Data;
 using WasteReductionPlatform.Models;
 using WasteReductionPlatform.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace WasteReductionPlatform.Controllers
 {
@@ -12,10 +13,12 @@ namespace WasteReductionPlatform.Controllers
     public class WasteLogsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public WasteLogsController(ApplicationDbContext context)
+        public WasteLogsController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -28,9 +31,78 @@ namespace WasteReductionPlatform.Controllers
             return View(logs);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                // Get the user ID from the claims
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Retrieve the user using UserManager
+                var user = await _userManager.FindByIdAsync(userId);
+
+                // Check if user is null (defensive check)
+                if (user == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                // Query the database to get the UserType based on the email
+                var userType = user.UserType;
+
+                // Create the model and populate the WasteTypes
+                var model = new WasteLogViewModel
+                {
+                    UserType = userType,
+                    WasteTypes = GetWasteTypes(userType.ToString())
+                };
+
+                return View(model);
+            }
+            else
+            {
+                // If the user is not authenticated, redirect to the home page or login
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+        // Example method to determine the waste types based on the user type
+        private List<string> GetWasteTypes(string userType)
+        {
+            if (userType == "Residential")
+            {
+                return new List<string>
+                {
+                    "Blue Box (Recyclables)",
+                    "Green Cart (Organic Waste)",
+                    "Garbage",
+                    "Bulk Waste",
+                    "Hazardous Waste"
+                };
+            }
+            else if (userType == "Commercial")
+            {
+                return new List<string>
+                {
+                    "General Waste (Garbage)",
+                    "Paper and Cardboard",
+                    "Plastics",
+                    "Glass",
+                    "Metals",
+                    "Organic Waste",
+                    "Construction and Demolition (C&D)",
+                    "Electronic Waste",
+                    "Medical and Clinical Waste",
+                    "Confidential Paper",
+                    "Textiles",
+                    "Grease and Oils",
+                    "Wood Waste",
+                    "Chemical Waste",
+                    "Industrial Waste"
+                };
+            }
+
+            return new List<string>();
         }
 
         [HttpPost]
@@ -50,11 +122,11 @@ namespace WasteReductionPlatform.Controllers
                     _context.Add(log);
                     await _context.SaveChangesAsync();
 
-                   // TempData["Success"] = "Waste log created successfully.";
+                    TempData["Success"] = "Waste log created successfully.";
                     return RedirectToAction(nameof(Index));
                 }
             
-            TempData["Error"] = "Failed to create waste log. Please check the form for errors.";
+           // TempData["Error"] = "Failed to create waste log. Please check the form for errors.";
             return View(model);
         }
 
@@ -103,7 +175,7 @@ namespace WasteReductionPlatform.Controllers
                         _context.Update(log);
                         await _context.SaveChangesAsync();
 
-                      //  TempData["Success"] = "Waste log updated successfully.";
+                       TempData["Success"] = "Waste log updated successfully.";
                         return RedirectToAction(nameof(Index));
                     }
                     catch (DbUpdateConcurrencyException)
@@ -118,7 +190,7 @@ namespace WasteReductionPlatform.Controllers
                         }
                     }
             }
-            TempData["Error"] = "Failed to update waste log. Please check the form for errors.";
+          //  TempData["Error"] = "Failed to update waste log. Please check the form for errors.";
             return View(model);
         }
 
@@ -147,7 +219,7 @@ namespace WasteReductionPlatform.Controllers
             {
                 _context.WasteLogs.Remove(log);
                 await _context.SaveChangesAsync();
-               // TempData["Success"] = "Waste log deleted successfully.";
+                TempData["Success"] = "Waste log deleted successfully.";
             }
             else
             {
@@ -155,6 +227,44 @@ namespace WasteReductionPlatform.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        //private List<string> GetWasteTypes(string userType)
+        //{
+        //    if (userType == "Residential")
+        //    {
+        //        return new List<string>
+        //        {
+        //            "Blue Box (Recyclables)",
+        //            "Green Cart (Organic Waste)",
+        //            "Garbage",
+        //            "Bulk Waste",
+        //            "Hazardous Waste"
+        //        };
+        //    }
+        //    else if (userType == "Commercial")
+        //    {
+        //        return new List<string>
+        //        {
+        //            "General Waste (Garbage)",
+        //            "Paper and Cardboard",
+        //            "Plastics",
+        //            "Glass",
+        //            "Metals",
+        //            "Organic Waste",
+        //            "Construction and Demolition (C&D)",
+        //            "Electronic Waste",
+        //            "Medical and Clinical Waste",
+        //            "Confidential Paper",
+        //            "Textiles",
+        //            "Grease and Oils",
+        //            "Wood Waste",
+        //            "Chemical Waste",
+        //            "Industrial Waste"
+        //        };
+        //    }
+
+        //    return new List<string>();
+        //}
 
         private bool WasteLogExists(int id)
         {

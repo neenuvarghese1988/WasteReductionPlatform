@@ -6,6 +6,19 @@
 
 <h1>Waste Logs</h1>
 
+<!-- TempData Messages -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
 <p>
 	<a asp-action="Create" class="btn btn-primary">Log New Waste</a>
 </p>
@@ -31,14 +44,14 @@
 			@foreach (var item in Model)
 			{
 				<tr>
-					<td>@item.Date.ToShortDateString()</td>
+					<td>@item.Date?.ToShortDateString()</td>
 					<td>@item.Weight</td>
 					<td>@item.WasteType</td>
 					<td>@item.UserType</td>
-					<td>
+					@* <td>
 						<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
 						<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-					</td>
+					</td> *@
 				</tr>
 			}
 		}

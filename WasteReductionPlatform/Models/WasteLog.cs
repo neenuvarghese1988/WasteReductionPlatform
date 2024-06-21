@@ -10,10 +10,11 @@ namespace WasteReductionPlatform.Models
         public string UserId { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? Date { get; set; }
 
         [Required]
-        public double Weight { get; set; }
+        public double? Weight { get; set; }
 
         [Required]
         public string WasteType { get; set; }

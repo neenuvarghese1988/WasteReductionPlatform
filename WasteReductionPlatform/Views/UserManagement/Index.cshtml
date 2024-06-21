@@ -5,7 +5,19 @@
 }
 
 <h1>User Management</h1>
-
+<!-- TempData Messages -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
 
 <table class="table">
     <thead>
