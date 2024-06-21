@@ -1,24 +1,36 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    border: 5px solid green;
+    padding: 20px;
+    margin: 50px;
+    font-family: Dax;
+    background-image: url('images/background.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+h1 {
+    color: black;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 /* Custom styles for navigation bar */
 .navbar-dark .navbar-nav .nav-link {
@@ -41,7 +53,7 @@ body {
 /* General styles */
 .jumbotron {
     background: linear-gradient(45deg, #28a745, #17a2b8);
-    color: white;
+    color: aquamarine;
     padding: 4rem 2rem;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
@@ -75,6 +87,7 @@ body {
         .footer a:hover {
             color: #ffd700; /* Gold color on hover */
         }
+
 .card {
     border: none;
     border-radius: 0.75rem;
@@ -100,6 +113,6 @@ input.input-validation-error, select.input-validation-error {
 }
 
     input.input-validation-error:focus, select.input-validation-error:focus {
-        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25); /* Red focus border */
+        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25); /* Red focus border */
+            
     }
-

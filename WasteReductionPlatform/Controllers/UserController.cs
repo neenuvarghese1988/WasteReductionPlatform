@@ -54,7 +54,8 @@ namespace WasteReductionPlatform.Controllers
 
                 var user = new User
                 {
-                    UserName = model.Username, 
+                    UserName = model.Username,
+                    IsAdmin = model.Role == "Admin",
                     UserType = model.UserType,
                     StreetAddress = model.StreetAddress,
                     City = model.City,

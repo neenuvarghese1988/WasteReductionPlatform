@@ -2,17 +2,115 @@
     ViewData["Title"] = "Waste Reduction Tips";
 }
 
-<h1>Waste Reduction Tips</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/site.css" />
+    <style>
+        body {
+            border: 5px solid green;
+            padding: 20px;
+            margin: 50px;
+            font-family: Arial, sans-serif;
+        }
 
-<p>Follow these tips to reduce waste and improve your recycling habits:</p>
+        h1, h2 {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
 
-<ul>
-    <li>**Reduce**: Buy products with less packaging and in bulk to reduce waste.</li>
-    <li>**Reuse**: Use reusable bags, bottles, and containers instead of single-use items.</li>
-    <li>**Recycle**: Separate recyclables like paper, cardboard, plastics, and metals.</li>
-    <li>**Compost**: Compost organic waste like food scraps and yard waste.</li>
-    <li>**Repair**: Fix broken items instead of throwing them away.</li>
-    <li>**Donate**: Give away items you no longer need to charity or someone who can use them.</li>
-</ul>
+        h1 {
+            color: #28a745; /* Green color */
+        }
 
-<p>Visit our <a href="/EducationalResources">Educational Resources</a> page for more information.</p>
+        h2 {
+            color: #007bff; /* Bootstrap primary color */
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        a {
+            color: #007bff; /* Bootstrap primary color */
+        }
+
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .waste-bin img {
+            width: 100px;
+            height: auto;
+        }
+
+        .waste-bin {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .waste-bin p {
+                margin-left: 15px;
+                margin-bottom: 0;
+            }
+
+        .content-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Waste Reduction Tips</h1>
+
+        <div class="content-section">
+            <p>Follow these tips to reduce waste and improve your recycling habits:</p>
+            <ul>
+                <li><strong>Reduce</strong>: Buy products with less packaging and in bulk to reduce waste.</li>
+                <li><strong>Reuse</strong>: Use reusable bags, bottles, and containers instead of single-use items.</li>
+                <li><strong>Recycle</strong>: Separate recyclables like paper, cardboard, plastics, and metals.</li>
+                <li><strong>Compost</strong>: Compost organic waste like food scraps and yard waste.</li>
+                <li><strong>Repair</strong>: Fix broken items instead of throwing them away.</li>
+                <li><strong>Donate</strong>: Give away items you no longer need to charity or someone who can use them.</li>
+            </ul>
+        </div>
+
+        <h2 class="mt-5">Different Types of Waste Bins and Their Uses</h2>
+
+        <div class="info-section">
+
+            <p><strong>Recycling Bin:</strong> Use this bin for recyclables such as paper, cardboard, plastics, and metals.</p>
+        </div>
+        <div class="waste-bin">
+
+            <p><strong>Organic Waste Bin:</strong> Use this bin for organic waste like food scraps and yard waste, which can be composted.</p>
+        </div>
+        <div class="waste-bin">
+
+            <p><strong>General Waste Bin:</strong> Use this bin for non-recyclable and non-organic waste.</p>
+        </div>
+        <div class="waste-bin">
+
+            <p><strong>E-Waste Bin:</strong> Use this bin for electronic waste such as old computers, phones, and other electronic devices.</p>
+        </div>
+        <div class="waste-bin">
+
+
+            <p><strong>Hazardous Waste Bin:</strong> Use this bin for hazardous materials like batteries, chemicals, and medical waste.</p>
+        </div>
+    </div>
+
+    <p>Visit our <a href="/EducationalResources">Educational Resources</a> page for more information.</p>
+    </div>
+</body>
+</html>

@@ -38,5 +38,14 @@ namespace WasteReductionPlatform.ViewModels
         public string Username { get; set; }
         [Required]
         public string Role { get; set; } // Add role selection
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Role != "Admin" && !UserType.HasValue)
+            {
+                yield return new ValidationResult("User Type is required for non-admin users.", new[] { "UserType" });
+            }
+        }
     }
 }
