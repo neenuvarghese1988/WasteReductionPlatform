@@ -76,7 +76,7 @@ namespace WasteReductionPlatform.Controllers
 
                 if (result.Succeeded)
                 {
-                   // await _userManager.AddToRoleAsync(user, model.Role);
+                    await _userManager.AddToRoleAsync(user, "User");
 
                     TempData["Success"] = "Registration successful.";
                     return RedirectToAction("Login", "User");
