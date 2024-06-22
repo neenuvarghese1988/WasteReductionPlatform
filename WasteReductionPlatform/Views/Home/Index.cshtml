@@ -2,52 +2,156 @@
     ViewData["Title"] = "Home";
 }
 
-<!-- Hero Section -->
-<div class="jumbotron text-center mb-5">
-    <div class="container">
-        <h1 class="display-4">Welcome to the Waste Reduction Platform</h1>
-        <p class="lead">Efficiently manage your waste and recycling activities and contribute to a cleaner environment.</p>
-        <hr class="my-4">
-        <p class="lead">
-           @*  <a class="btn btn-success btn-lg" href="/PickupSchedules/Schedule" role="button">Schedule Pickup</a>
-            <a class="btn btn-info btn-lg" href="/WasteLogs/Create" role="button">Log Waste</a> *@
-        </p>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/site.css" />
+    <style>
+        /* Body and HTML styles */
+        body {
+            margin-bottom: 60px;
+            border: 5px solid green;
+            padding: 20px;
+            margin: 50px;
+            font-family: Dax;
+            background-image: url('images/background.png');
+            background-size: cover;
+            background-attachment: fixed;
+        }
 
-<!-- Features Section -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 border-success">
-                <div class="card-body text-center">
-                    <i class="fas fa-truck fa-3x text-success mb-3"></i>
-                    <h5 class="card-title">Schedule Pickup</h5>
-                    <p class="card-text">Plan your waste and recycling pickups according to your convenience.</p>
-                   @*  <a asp-controller="PickupSchedules" action="Index" class="btn btn-success">Schedule Now</a> *@
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 border-info">
-                <div class="card-body text-center">
-                    <i class="fas fa-recycle fa-3x text-info mb-3"></i>
-                    <h5 class="card-title">Log Waste</h5>
-                    <p class="card-text">Track your waste and recycling data and monitor your impact.</p>
-                   @*  <a href="/WasteLogs/Create" class="btn btn-info">Log Waste</a> *@
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 border-primary">
-                <div class="card-body text-center">
-                    <i class="fas fa-book fa-3x text-primary mb-3"></i>
-                    <h5 class="card-title">Educational Resources</h5>
-                    <p class="card-text">Access resources to learn about waste reduction and recycling practices.</p>
-                    <a href="/EducationalResources" class="btn btn-primary">Learn More</a>
-                </div>
-            </div>
+        .navbar-nav {
+            width: 100%;
+            justify-content: center; /* Center items horizontally */
+            text-align: center; /* Center text */
+            
+        }
+
+        h1 {
+            color: black;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .lead{
+            color: darkgreen;
+            font-weight: bolder;
+
+        }
+
+        /* Video background styles */
+        .video-background {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+            .video-background video {
+                min-width: 100%;
+                min-height: 100%;
+                width: auto;
+                height: auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+        /* Hero section styles */
+        .jumbotron {
+            background: none /* Make jumbotron background transparent */
+        }
+
+
+
+
+        /* Card styles */
+        .card {
+            border: none; /* Remove border from cards */
+            background-color:aquamarine;
+            transition: transform 0.3s ease-in-out; /* Smooth scale animation */
+        }
+
+            .card:hover {
+                transform: scale(1.05); /* Scale up on hover */
+            }
+
+            /* Card icon styles */
+            .card .fa-3x {
+                color: darkgreen; /* Icon color */
+            }
+    </style>
+
+</head>
+<body>
+
+    <!-- Video Background Section -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="video/video1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="jumbotron text-center mb-5">
+        <div class="container">
+            <h1 class="display-4">Welcome to the Waste Reduction Platform</h1>
+            <p class="lead">Efficiently manage your waste and recycling activities and contribute to a cleaner environment.</p>
+            <hr class="my-4">
+            <p class="lead">
+                <!-- Commented out links for schedule pickup and log waste -->
+                <!-- <a class="btn btn-success btn-lg" href="/PickupSchedules/Schedule" role="button">Schedule Pickup</a>
+                <a class="btn btn-info btn-lg" href="/WasteLogs/Create" role="button">Log Waste</a> -->
+            </p>
         </div>
     </div>
-</div>
 
+    <!-- Features Section -->
+     <div class="container features-section">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-success">
+                    <div class="card-body text-center">
+                        <i class="fas fa-truck fa-3x mb-3"></i>
+                        <h5 class="card-title">Schedule Pickup</h5>
+                        <p class="card-text">Plan your waste and recycling pickups according to your convenience.</p>
+                        <!-- Commented out link for schedule pickup -->
+                        <!-- <a asp-controller="PickupSchedules" action="Index" class="btn btn-success">Schedule Now</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-info">
+                    <div class="card-body text-center">
+                        <i class="fas fa-recycle fa-3x mb-3"></i>
+                        <h5 class="card-title">Log Waste</h5>
+                        <p class="card-text">Track your waste and recycling data and monitor your impact.</p>
+                        <!-- Commented out link for log waste -->
+                        <!-- <a href="/WasteLogs/Create" class="btn btn-info">Log Waste</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-primary">
+                    <div class="card-body text-center">
+                        <i class="fas fa-book fa-3x mb-3"></i>
+                        <h5 class="card-title">Educational Resources</h5>
+                        <p class="card-text">Access resources to learn about waste reduction and recycling practices.</p>
+                        <a href="/EducationalResources" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+        </div>
+
+    <!-- JavaScript and Bootstrap Bundle -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

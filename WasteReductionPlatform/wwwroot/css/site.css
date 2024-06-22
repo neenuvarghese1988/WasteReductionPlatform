@@ -32,23 +32,43 @@ h1 {
     color: black;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
+p{
+    color:darkgreen;
+    font-weight:bolder;
+    
+
+}
 /* Custom styles for navigation bar */
 .navbar-dark .navbar-nav .nav-link {
     color: white;
     padding: 0.5rem 1rem;
 }
 
-    .navbar-dark .navbar-nav .nav-link:hover {
-        color: #ffd700; /* Gold color on hover */
-    }
+.navbar-nav {
+    width: 100%;
+    justify-content: center; /* Center items horizontally */
+    text-align: center; /* Center text */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffd700; /* Gold color on hover */
+}
 
 .navbar-toggler {
-    border-color: white;
+    border-color: white; /* White border color for the toggler button */
 }
 
 .navbar-toggler-icon {
-    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath stroke="rgba%28255, 255, 255, 0.5%29" stroke-width="2" linecap="round" linejoin="round" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath stroke="rgba(255, 255, 255, 0.5)" stroke-width="2" linecap="round" linejoin="round" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+    background-color: transparent; /* Ensure background is transparent */
+    width: 1.5em; /* Adjust width of icon */
+    height: 1.5em; /* Adjust height of icon */
 }
+
+.navbar-toggler:focus {
+    outline: none; /* Remove focus outline */
+}
+
 
 /* General styles */
 .jumbotron {
@@ -114,5 +134,5 @@ input.input-validation-error, select.input-validation-error {
 
     input.input-validation-error:focus, select.input-validation-error:focus {
         box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25); /* Red focus border */
-            
+          
     }

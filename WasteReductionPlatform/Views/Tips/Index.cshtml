@@ -67,6 +67,32 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        .flashcard {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+            .flashcard:hover {
+                transform: scale(1.05);
+            }
+
+            .flashcard img {
+                max-width: 100%;
+                border-radius: 10px;
+                margin-bottom: 15px;
+            }
+
+            .flashcard p {
+                margin: 0;
+                font-size: 1.1em;
+            }
     </style>
 </head>
 <body>
@@ -75,42 +101,72 @@
 
         <div class="content-section">
             <p>Follow these tips to reduce waste and improve your recycling habits:</p>
-            <ul>
-                <li><strong>Reduce</strong>: Buy products with less packaging and in bulk to reduce waste.</li>
-                <li><strong>Reuse</strong>: Use reusable bags, bottles, and containers instead of single-use items.</li>
-                <li><strong>Recycle</strong>: Separate recyclables like paper, cardboard, plastics, and metals.</li>
-                <li><strong>Compost</strong>: Compost organic waste like food scraps and yard waste.</li>
-                <li><strong>Repair</strong>: Fix broken items instead of throwing them away.</li>
-                <li><strong>Donate</strong>: Give away items you no longer need to charity or someone who can use them.</li>
-            </ul>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="flashcard">
+                        <img src="https://example.com/reduce.gif" alt="Reduce">
+                        <p><strong>Reduce</strong>: Buy products with less packaging and in bulk to reduce waste.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flashcard">
+                        <img src="https://example.com/reuse.gif" alt="Reuse">
+                        <p><strong>Reuse</strong>: Use reusable bags, bottles, and containers instead of single-use items.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flashcard">
+                        <img src="https://example.com/recycle.gif" alt="Recycle">
+                        <p><strong>Recycle</strong>: Separate recyclables like paper, cardboard, plastics, and metals.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flashcard">
+                        <img src="https://example.com/compost.gif" alt="Compost">
+                        <p><strong>Compost</strong>: Compost organic waste like food scraps and yard waste.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flashcard">
+                        <img src="https://example.com/repair.gif" alt="Repair">
+                        <p><strong>Repair</strong>: Fix broken items instead of throwing them away.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flashcard">
+                        <img src="https://example.com/donate.gif" alt="Donate">
+                        <p><strong>Donate</strong>: Give away items you no longer need to charity or someone who can use them.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <h2 class="mt-5">Different Types of Waste Bins and Their Uses</h2>
 
         <div class="info-section">
-
-            <p><strong>Recycling Bin:</strong> Use this bin for recyclables such as paper, cardboard, plastics, and metals.</p>
-        </div>
-        <div class="waste-bin">
-
-            <p><strong>Organic Waste Bin:</strong> Use this bin for organic waste like food scraps and yard waste, which can be composted.</p>
-        </div>
-        <div class="waste-bin">
-
-            <p><strong>General Waste Bin:</strong> Use this bin for non-recyclable and non-organic waste.</p>
-        </div>
-        <div class="waste-bin">
-
-            <p><strong>E-Waste Bin:</strong> Use this bin for electronic waste such as old computers, phones, and other electronic devices.</p>
-        </div>
-        <div class="waste-bin">
-
-
-            <p><strong>Hazardous Waste Bin:</strong> Use this bin for hazardous materials like batteries, chemicals, and medical waste.</p>
+            <div class="waste-bin">
+                <img src="https://example.com/recycling-bin.png" alt="Recycling Bin">
+                <p><strong>Recycling Bin:</strong> Use this bin for recyclables such as paper, cardboard, plastics, and metals.</p>
+            </div>
+            <div class="waste-bin">
+                <img src="https://example.com/organic-bin.png" alt="Organic Waste Bin">
+                <p><strong>Organic Waste Bin:</strong> Use this bin for organic waste like food scraps and yard waste, which can be composted.</p>
+            </div>
+            <div class="waste-bin">
+                <img src="https://example.com/general-waste-bin.png" alt="General Waste Bin">
+                <p><strong>General Waste Bin:</strong> Use this bin for non-recyclable and non-organic waste.</p>
+            </div>
+            <div class="waste-bin">
+                <img src="https://example.com/e-waste-bin.png" alt="E-Waste Bin">
+                <p><strong>E-Waste Bin:</strong> Use this bin for electronic waste such as old computers, phones, and other electronic devices.</p>
+            </div>
+            <div class="waste-bin">
+                <img src="https://example.com/hazardous-bin.png" alt="Hazardous Waste Bin">
+                <p><strong>Hazardous Waste Bin:</strong> Use this bin for hazardous materials like batteries, chemicals, and medical waste.</p>
+            </div>
         </div>
     </div>
 
     <p>Visit our <a href="/EducationalResources">Educational Resources</a> page for more information.</p>
-    </div>
 </body>
 </html>
