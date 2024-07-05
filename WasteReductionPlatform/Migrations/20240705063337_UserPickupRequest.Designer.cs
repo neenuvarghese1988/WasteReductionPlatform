@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WasteReductionPlatform.Data;
 
@@ -11,9 +12,11 @@ using WasteReductionPlatform.Data;
 namespace WasteReductionPlatform.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240705063337_UserPickupRequest")]
+    partial class UserPickupRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,41 +160,6 @@ namespace WasteReductionPlatform.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("WasteReductionPlatform.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ScheduledPickupDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("WasteReductionPlatform.Models.PickupSchedule", b =>
@@ -426,17 +394,6 @@ namespace WasteReductionPlatform.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WasteReductionPlatform.Models.Notification", b =>
-                {
-                    b.HasOne("WasteReductionPlatform.Models.User", "User")
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("WasteReductionPlatform.Models.UserPickupRequest", b =>
                 {
                     b.HasOne("WasteReductionPlatform.Models.PickupSchedule", "PickupSchedule")
@@ -467,8 +424,6 @@ namespace WasteReductionPlatform.Migrations
 
             modelBuilder.Entity("WasteReductionPlatform.Models.User", b =>
                 {
-                    b.Navigation("Notifications");
-
                     b.Navigation("WasteLogs");
                 });
 #pragma warning restore 612, 618

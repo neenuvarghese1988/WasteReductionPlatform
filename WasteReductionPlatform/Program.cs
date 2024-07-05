@@ -7,9 +7,6 @@ using WasteReductionPlatform.Middleware;
 using WasteReductionPlatform.Models;
 using WasteReductionPlatform.Services;
 
-
-
-
 namespace WasteReductionPlatform
 {
     public class Program
@@ -21,7 +18,7 @@ namespace WasteReductionPlatform
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WasteReductionContext")));
-
+            builder.Services.AddSingleton<NotificationService>();
             builder.Services.AddDefaultIdentity<User>(options =>
             {
                // options.SignIn.RequireConfirmedAccount = true;
@@ -88,7 +85,10 @@ namespace WasteReductionPlatform
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            await InitializeRolesAndAdminAsync(app);
+            // Bind Admin User Settings from appsettings.json
+            var adminUserSettings = builder.Configuration.GetSection("AdminUser").Get<AdminUserSettings>();
+
+            await InitializeRolesAndAdminAsync(app, adminUserSettings);
 
             app.Run();
         }
@@ -115,7 +115,7 @@ namespace WasteReductionPlatform
         //}
 
 
-        private static async Task InitializeRolesAndAdminAsync(WebApplication app)
+        private static async Task InitializeRolesAndAdminAsync(WebApplication app, AdminUserSettings adminUserSettings)
         {
             using var scope = app.Services.CreateScope();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -137,25 +137,22 @@ namespace WasteReductionPlatform
                 }
 
                 // Create admin user if it does not exist
-                var adminEmail = "admin@example.com";
-
-                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                var adminUser = await userManager.FindByNameAsync(adminUserSettings.UserName);
                 if (adminUser == null)
                 {
                     adminUser = new User
                     {
-                        UserName = "admin",
-                        //Email = "admin@gmail.com",
-                        IsAdmin = true,
-                        UserType = UserType.Residential,
-                        StreetAddress = "123 Thorndale St",
-                        City = "Waterloo",
-                        Province = "ON",
-                        PostalCode = "N2T 0A9",
+                        UserName = adminUserSettings.UserName,
+                        IsAdmin = adminUserSettings.IsAdmin,
+                        UserType = Enum.Parse<UserType>(adminUserSettings.UserType),
+                        StreetAddress = adminUserSettings.StreetAddress,
+                        City = adminUserSettings.City,
+                        Province = adminUserSettings.Province,
+                        PostalCode = adminUserSettings.PostalCode,
                         EmailConfirmed = true // Confirm email here
                     };
 
-                    var result = await userManager.CreateAsync(adminUser, "Admin@123");
+                    var result = await userManager.CreateAsync(adminUser, adminUserSettings.Password);
                     if (result.Succeeded)
 
                     {

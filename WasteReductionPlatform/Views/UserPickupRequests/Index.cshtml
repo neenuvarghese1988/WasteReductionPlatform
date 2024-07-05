@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WasteReductionPlatform.Models.UserPickupRequest>
+
+@{
+    ViewData["Title"] = "My Pickup Requests";
+}
+
+<h1>My Pickup Requests</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date Requested</th>
+            <th>Pickup Date</th>
+            <th>Pickup Type</th>
+            <th>City</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.RequestedDate.ToShortDateString()</td>
+                <td>@request.PickupSchedule.PickupDate.ToShortDateString()</td>
+                <td>@request.PickupSchedule.PickupType</td>
+                <td>@request.PickupSchedule.Area</td>
+                <td>@(request.IsConfirmed ? "Confirmed" : "Pending")</td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@request.Id" class="btn btn-danger btn-sm">Cancel</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Schedule" class="btn btn-primary">Request New Pickup</a>

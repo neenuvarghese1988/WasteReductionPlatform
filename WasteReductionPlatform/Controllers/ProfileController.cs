@@ -26,7 +26,7 @@ public class ProfileController : Controller
 
         var model = new UserProfileViewModel
         {
-            Email = user.Email,
+            Email = user.UserName,
             UserType = user.UserType,
             StreetAddress = user.StreetAddress,
             City = user.City,

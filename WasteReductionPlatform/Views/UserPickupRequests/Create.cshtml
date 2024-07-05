@@ -1,0 +1,26 @@
+﻿@model WasteReductionPlatform.Models.PickupSchedule
+
+@{
+    ViewData["Title"] = "Request Pickup";
+}
+
+<h1>Request Pickup</h1>
+
+<div>
+    <h4>Pickup Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Pickup Date</dt>
+        <dd class="col-sm-10">@Model.PickupDate.ToShortDateString()</dd>
+        <dt class="col-sm-2">Pickup Type</dt>
+        <dd class="col-sm-10">@Model.PickupType</dd>
+        <dt class="col-sm-2">City</dt>
+        <dd class="col-sm-10">@Model.Area</dd>
+    </dl>
+
+    <form asp-action="Create">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-primary">Confirm Request</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

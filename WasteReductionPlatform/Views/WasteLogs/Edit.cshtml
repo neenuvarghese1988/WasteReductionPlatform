@@ -1,58 +1,52 @@
 ﻿@model WasteReductionPlatform.ViewModels.WasteLogViewModel
 
 @{
-    ViewData["Title"] = "Log New Waste";
+    ViewData["Title"] = "Edit Waste Log";
 }
 
-<h1>Log New Waste</h1>
+<h1>Edit Waste Log</h1>
 
-<!-- TempData Messages -->
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success" role="alert">
-        @TempData["Success"]
-    </div>
-}
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData["Error"]
-    </div>
-}
 
-<form asp-action="Create">
+<form asp-action="Edit">
+    <div asp-validation-summary="All" class="alert alert-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
     <div class="form-group">
         <label asp-for="Date"></label>
         <input asp-for="Date" class="form-control" />
         <span asp-validation-for="Date" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="Weight">Weight (kg)</label>
         <input asp-for="Weight" class="form-control" />
         <span asp-validation-for="Weight" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="UserType"></label>
         <select asp-for="UserType" class="form-control" disabled>
             <option value="Residential">Residential</option>
             <option value="Commercial">Commercial</option>
         </select>
-        <input type="hidden" asp-for="UserType" /> <!-- Add hidden input for posting UserType -->
+        <input type="hidden" asp-for="UserType" />
         <span asp-validation-for="UserType" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="WasteType"></label>
         <select asp-for="WasteType" class="form-control" id="WasteType">
-            <option value="">-- Select Waste Type --</option> <!-- Ensure this option is not selected -->
+            <option value="">-- Select Waste Type --</option>
             @foreach (var type in Model.WasteTypes)
             {
-                <option value="@type">@type</option>
+                <option value="@type" selected="@type == Model.WasteType">@type</option>
             }
         </select>
         <span asp-validation-for="WasteType" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Log Waste</button>
-    <a asp-controller="UserDashboard" asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
 
 @section Scripts {

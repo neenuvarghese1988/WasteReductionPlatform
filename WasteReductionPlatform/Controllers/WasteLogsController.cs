@@ -134,6 +134,8 @@ namespace WasteReductionPlatform.Controllers
             return View(model);
         }
 
+ 
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -153,8 +155,10 @@ namespace WasteReductionPlatform.Controllers
                 Date = log.Date,
                 Weight = log.Weight,
                 WasteType = log.WasteType,
-                UserType = log.UserType
+                UserType = log.UserType,
+                WasteTypes = GetWasteTypes(log.UserType.ToString())
             };
+
             return View(model);
         }
 
@@ -168,36 +172,38 @@ namespace WasteReductionPlatform.Controllers
 
             if (ModelState.IsValid)
             {
-                
-                    try
-                    {
-                        var log = await _context.WasteLogs.FindAsync(id);
-                        log.Date = model.Date;
-                        log.Weight = model.Weight;
-                        log.WasteType = model.WasteType;
-                        log.UserType = model.UserType;
-                        _context.Update(log);
-                        await _context.SaveChangesAsync();
+                try
+                {
+                    var log = await _context.WasteLogs.FindAsync(id);
+                    log.Date = model.Date.Value; // Date is nullable in ViewModel, so use .Value
+                    log.Weight = model.Weight.Value; // Weight is nullable in ViewModel, so use .Value
+                    log.WasteType = model.WasteType;
+                    log.UserType = model.UserType;
 
-                       TempData["Success"] = "Waste log updated successfully.";
-                        return RedirectToAction(nameof(Index));
-                    }
-                    catch (DbUpdateConcurrencyException)
+                    _context.Update(log);
+                    await _context.SaveChangesAsync();
+
+                    TempData["Success"] = "Waste log updated successfully.";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!WasteLogExists(model.Id))
                     {
-                        if (!WasteLogExists(model.Id))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
+                        return NotFound();
                     }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-          //  TempData["Error"] = "Failed to update waste log. Please check the form for errors.";
+
+            // Repopulate WasteTypes if the form submission fails
+            model.WasteTypes = GetWasteTypes(model.UserType.ToString());
             return View(model);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -215,8 +221,8 @@ namespace WasteReductionPlatform.Controllers
             return View(log);
         }
 
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
             var log = await _context.WasteLogs.FindAsync(id);
             if (log != null)
@@ -227,48 +233,11 @@ namespace WasteReductionPlatform.Controllers
             }
             else
             {
-                TempData["Error"] = "Failed to delete waste log. It may have already been removed.";
+                TempData["ErrorWasteLog"] = "Failed to delete waste log. It may have already been removed.";
             }
             return RedirectToAction(nameof(Index));
         }
 
-        //private List<string> GetWasteTypes(string userType)
-        //{
-        //    if (userType == "Residential")
-        //    {
-        //        return new List<string>
-        //        {
-        //            "Blue Box (Recyclables)",
-        //            "Green Cart (Organic Waste)",
-        //            "Garbage",
-        //            "Bulk Waste",
-        //            "Hazardous Waste"
-        //        };
-        //    }
-        //    else if (userType == "Commercial")
-        //    {
-        //        return new List<string>
-        //        {
-        //            "General Waste (Garbage)",
-        //            "Paper and Cardboard",
-        //            "Plastics",
-        //            "Glass",
-        //            "Metals",
-        //            "Organic Waste",
-        //            "Construction and Demolition (C&D)",
-        //            "Electronic Waste",
-        //            "Medical and Clinical Waste",
-        //            "Confidential Paper",
-        //            "Textiles",
-        //            "Grease and Oils",
-        //            "Wood Waste",
-        //            "Chemical Waste",
-        //            "Industrial Waste"
-        //        };
-        //    }
-
-        //    return new List<string>();
-        //}
 
         private bool WasteLogExists(int id)
         {

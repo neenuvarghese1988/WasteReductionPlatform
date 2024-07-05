@@ -28,6 +28,8 @@ namespace WasteReductionPlatform.Models
 
         public ICollection<WasteLog> WasteLogs { get; set; }
 
+        // Navigation property for missed pickup notifications
+        public ICollection<Notification> Notifications { get; set; }
     }
 
     public enum UserType

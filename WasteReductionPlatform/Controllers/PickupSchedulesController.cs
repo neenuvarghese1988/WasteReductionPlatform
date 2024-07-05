@@ -191,28 +191,7 @@ namespace WasteReductionPlatform.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-
-        private bool PickupScheduleExists(int id)
-        {
-            return _context.PickupSchedules.Any(e => e.Id == id);
-        }
-
-        [Authorize]
-        public async Task<IActionResult> Schedule()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _context.Users.FindAsync(userId);
-
-            var schedules = await _context.PickupSchedules
-                .Where(p => p.Area == user.PostalCode && p.UserType == user.UserType)
-                .ToListAsync();
-
-            return View(schedules);
-        }
-
-        [Authorize]
-        public async Task<IActionResult> RequestPickup(int id)
+        public async Task<IActionResult> Confirm(int id)
         {
             var schedule = await _context.PickupSchedules.FindAsync(id);
             if (schedule == null)
@@ -220,8 +199,48 @@ namespace WasteReductionPlatform.Controllers
                 return NotFound();
             }
 
-            // Implement logic to handle the pickup request, e.g., save a record of the request
-            return RedirectToAction(nameof(Schedule));
+            schedule.IsConfirmed = true;
+            _context.Update(schedule);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Pickup confirmed successfully.";
+            return RedirectToAction(nameof(Index));
         }
+
+        private bool PickupScheduleExists(int id)
+        {
+            return _context.PickupSchedules.Any(e => e.Id == id);
+        }
+
+        //private bool PickupScheduleExists(int id)
+        //{
+        //    return _context.PickupSchedules.Any(e => e.Id == id);
+        //}
+
+        //[Authorize]
+        //public async Task<IActionResult> Schedule()
+        //{
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var user = await _context.Users.FindAsync(userId);
+
+        //    var schedules = await _context.PickupSchedules
+        //        .Where(p => p.Area == user.PostalCode && p.UserType == user.UserType)
+        //        .ToListAsync();
+
+        //    return View(schedules);
+        //}
+
+        //[Authorize]
+        //public async Task<IActionResult> RequestPickup(int id)
+        //{
+        //    var schedule = await _context.PickupSchedules.FindAsync(id);
+        //    if (schedule == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    // Implement logic to handle the pickup request, e.g., save a record of the request
+        //    return RedirectToAction(nameof(Schedule));
+        //}
     }
 }

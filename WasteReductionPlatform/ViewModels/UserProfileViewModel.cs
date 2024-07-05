@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using WasteReductionPlatform.Models;
 
 namespace WasteReductionPlatform.ViewModels
 {
 	public class UserProfileViewModel
 	{
+		[DisplayName("Username")]
 		public string Email { get; set; }
 
 		

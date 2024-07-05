@@ -14,6 +14,10 @@ namespace WasteReductionPlatform.Data
         public DbSet<PickupSchedule> PickupSchedules { get; set; }
         public DbSet<WasteLog> WasteLogs { get; set; }
 
+        public DbSet<UserPickupRequest> UserPickupRequests { get; set; }
+
+        public DbSet<Notification> Notifications { get; set; }
+
         //protected override void OnModelCreating(ModelBuilder builder)
         //{
         //    base.OnModelCreating(builder);
