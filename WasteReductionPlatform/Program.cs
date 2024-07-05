@@ -18,8 +18,9 @@ namespace WasteReductionPlatform
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WasteReductionContext")));
-            builder.Services.AddSingleton<NotificationService>();
-            builder.Services.AddDefaultIdentity<User>(options =>
+            builder.Services.AddScoped<NotificationService>();
+			builder.Services.AddHostedService<NotificationBackgroundService>();
+			builder.Services.AddDefaultIdentity<User>(options =>
             {
                // options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireDigit = true;
