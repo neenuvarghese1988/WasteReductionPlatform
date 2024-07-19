@@ -1,9 +1,13 @@
-﻿@{
-	ViewData["Title"] = "User Dashboard";
+﻿@model IEnumerable<WasteReductionPlatform.Models.Notification>
+
+@{
+	var userType = Context.Session.GetString("UserType");
+	var unreadNotificationsCount = Context.Session.GetInt32("UnreadNotificationsCount") ?? 0;
 }
 
+
 <div class="container">
-	<h1 class="mt-4">User Dashboard</h1>
+	<h1 class="mt-4">@userType Dashboard</h1>
 	<div class="row mt-4">
 		<div class="col-md-4">
 			<div class="card shadow-sm">
@@ -54,13 +58,18 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="card shadow-sm">
-				<div class="card-body text-center">
-					<h5 class="card-title">Notifications</h5>
-					<p class="card-text">View notifications about high waste alerts.</p>
-					<a asp-controller="Notifications" asp-action="Index" class="btn btn-dark btn-block">View Notifications</a>
-				</div>
-			</div>
-		</div>
+    <div class="card shadow-sm">
+        <div class="card-body text-center">
+            <h5 class="card-title">
+                Notifications
+                @if (unreadNotificationsCount > 0)
+                {
+                    <span class="blinking-star">★</span>
+                }
+            </h5>
+            <p class="card-text">View notifications about high waste alerts.</p>
+            <a asp-controller="Notifications" asp-action="Index" class="btn btn-dark btn-block">View Notifications</a>
+        </div>
+    </div>
 	</div>
 </div>

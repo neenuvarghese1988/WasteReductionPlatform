@@ -118,8 +118,10 @@ namespace WasteReductionPlatform.Controllers
                 {
                     // Try to sign in
                     var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
+
                     if (result.Succeeded)
                     {
+                        HttpContext.Session.SetString("UserType", user.UserType.ToString());
                         if (await _userManager.IsInRoleAsync(user, "Admin"))
                         {
                             return RedirectToAction("Index", "AdminDashboard");

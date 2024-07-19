@@ -18,38 +18,66 @@ namespace WasteReductionPlatform.Services
             _serviceProvider = serviceProvider;
         }
 
-        public async Task DetectHighWasteProductionAsync()
+        //public async Task DetectHighWasteProductionAsync()
+        
+        //{
+        //    using (var scope = _serviceProvider.CreateScope())
+        //    {
+        //        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        //        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+        //        var users = await userManager.Users.ToListAsync();
+
+        //        foreach (var user in users)
+        //        {
+        //            var totalWaste = await context.WasteLogs
+        //                .Where(w => w.UserId == user.Id && w.Date > DateTime.Today.AddDays(-30))
+        //                .SumAsync(w => w.Weight);
+
+        //            if (totalWaste > 100) // Example threshold for high waste production
+        //            {
+        //                var alert = new Notification
+        //                {
+        //                    UserId = user.Id,
+        //                    Date = DateTime.Now,
+        //                    Message = "Your waste production has exceeded 100kg in the past 30 days.",
+        //                    IsRead = false,
+        //                    Type = NotificationType.HighWasteProduction
+        //                };
+
+        //                context.Notifications.Add(alert);
+        //                await context.SaveChangesAsync();
+        //            }
+        //        }
+        //    }
+        //}
+        public async Task DetectHighWasteProductionAsync(string userId)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
-                var users = await userManager.Users.ToListAsync();
+                var totalWaste = await context.WasteLogs
+                    .Where(w => w.UserId == userId && w.Date > DateTime.Today.AddDays(-30))
+                    .SumAsync(w => w.Weight);
 
-                foreach (var user in users)
+                if (totalWaste > 100) // Example threshold for high waste production
                 {
-                    var totalWaste = await context.WasteLogs
-                        .Where(w => w.UserId == user.Id && w.Date > DateTime.Today.AddDays(-30))
-                        .SumAsync(w => w.Weight);
-
-                    if (totalWaste > 100) // Example threshold for high waste production
+                    var alert = new Notification
                     {
-                        var alert = new Notification
-                        {
-                            UserId = user.Id,
-                            Date = DateTime.Now,
-                            Message = "Your waste production has exceeded 100kg in the past 30 days.",
-                            IsRead = false,
-                            Type = NotificationType.HighWasteProduction
-                        };
+                        UserId = userId,
+                        Date = DateTime.Now,
+                        Message = "Alert: Your waste production has exceeded 100kg in the past 30 days. Please consider reducing your waste to contribute to a cleaner environment.",
+                        IsRead = false,
+                        Type = NotificationType.HighWasteProduction
+                    };
 
-                        context.Notifications.Add(alert);
-                        await context.SaveChangesAsync();
-                    }
+                    context.Notifications.Add(alert);
+                    await context.SaveChangesAsync();
                 }
             }
         }
+
 
         public async Task DetectMissedPickupsAsync()
         {

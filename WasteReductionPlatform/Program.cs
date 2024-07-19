@@ -33,16 +33,24 @@ namespace WasteReductionPlatform
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //builder.Services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Cookie.HttpOnly = true;
-            //    options.ExpireTimeSpan = TimeSpan.FromDays(30); // Persistent login duration
-            //    options.SlidingExpiration = false;
-            //    options.Cookie.IsEssential = true;
-            //    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            //});
+			//builder.Services.ConfigureApplicationCookie(options =>
+			//{
+			//    options.Cookie.HttpOnly = true;
+			//    options.ExpireTimeSpan = TimeSpan.FromDays(30); // Persistent login duration
+			//    options.SlidingExpiration = false;
+			//    options.Cookie.IsEssential = true;
+			//    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+			//});
+			builder.Services.AddDistributedMemoryCache();
 
-            builder.Services.AddControllersWithViews();
+			builder.Services.AddSession(options =>
+			{
+				options.IdleTimeout = TimeSpan.FromMinutes(30);
+				options.Cookie.HttpOnly = true;
+				options.Cookie.IsEssential = true;
+			});
+
+			builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
             // Register the email sender service
@@ -80,8 +88,8 @@ namespace WasteReductionPlatform
             //});
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.MapControllerRoute(
+			app.UseSession();
+			app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();

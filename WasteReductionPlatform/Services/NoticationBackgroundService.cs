@@ -17,7 +17,7 @@ public class NotificationBackgroundService : BackgroundService
 			{
 				var notificationService = scope.ServiceProvider.GetRequiredService<NotificationService>();
 				await notificationService.DetectMissedPickupsAsync();
-				await notificationService.DetectHighWasteProductionAsync();
+				//await notificationService.DetectHighWasteProductionAsync();
 			}
 			await Task.Delay(TimeSpan.FromHours(1), stoppingToken); // Adjust the time interval as needed
 		}

@@ -6,7 +6,7 @@ using WasteReductionPlatform.Data;
 using WasteReductionPlatform.Models;
 using WasteReductionPlatform.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using WasteReductionPlatform.Services;
 
 namespace WasteReductionPlatform.Controllers
 {
@@ -15,11 +15,13 @@ namespace WasteReductionPlatform.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly NotificationService _notificationService;
 
-        public WasteLogsController(ApplicationDbContext context, UserManager<User> userManager)
+        public WasteLogsController(ApplicationDbContext context, UserManager<User> userManager, NotificationService notificationService)
         {
             _context = context;
             _userManager = userManager;
+            _notificationService = notificationService;
         }
 
         public async Task<IActionResult> Index()
@@ -112,19 +114,22 @@ namespace WasteReductionPlatform.Controllers
             
             if (ModelState.IsValid)
             {
-               
-                    var log = new WasteLog
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var log = new WasteLog
                     {
                         Date = model.Date,
                         Weight = model.Weight,
                         WasteType = model.WasteType,
                         UserType = model.UserType,
-                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
-                    };
+                        UserId = userId
+                };
                     _context.Add(log);
                     await _context.SaveChangesAsync();
 
-                    TempData["Success"] = "Waste log created successfully.";
+                // Call DetectHighWasteProductionAsync to check and notify for high waste production
+                await _notificationService.DetectHighWasteProductionAsync(userId);
+
+                TempData["Success"] = "Waste log created successfully.";
                     return RedirectToAction(nameof(Index));
                 }
 

@@ -1,86 +1,89 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Waste Reduction Platform</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-   
-    <link rel="stylesheet" href="~/css/site.css" />
-    <!-- Validation Scripts -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - Waste Reduction Platform</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+	<link rel="stylesheet" href="~/css/site.css" />
+	<!-- Validation Scripts -->
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    <img src="~/images/logo.jpg" alt="Logo" style="height: 60px;">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="/">Home</a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" href="/AdminDashboard">Admin Dashboard</a>
-                                </li>
-                            }
-                            else if (User.IsInRole("User"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" href="/UserDashboard">User Dashboard</a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        @await Html.PartialAsync("_LoginPartial")
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container mt-4">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <footer class="footer bg-success text-white mt-4">
-        <div class="container py-3">
-            <div class="row">
-                <div class="col-md-6 text-left">
-                    &copy; 2024 - Waste Reduction Platform - <a class="text-white" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </div>
-                <div class="col-md-6 text-right">
-                    <div class="social-icons">
-                        <!-- Replace '#' with actual links -->
-                        <a href="#" class="text-white mr-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white mr-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white mr-2"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="text-white mr-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
+			<div class="container">
+				<a class="navbar-brand" href="/">
+					<img src="~/images/logo.jpg" alt="Logo" style="height: 60px;">
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link text-white" href="/">Home</a>
+						</li>
+						@if (User.Identity.IsAuthenticated)
+						{
+							if (User.IsInRole("Admin"))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-white" href="/AdminDashboard">Admin Dashboard</a>
+								</li>
+							}
+							else if (User.IsInRole("User"))
+							{
+
+								var userType = Context.Session.GetString("UserType");
+
+								<li class="nav-item">
+									<a class="nav-link text-white" href="/UserDashboard">@userType Dashboard</a>
+								</li>
+							}
+						}
+					</ul>
+					<ul class="navbar-nav ml-auto">
+						@await Html.PartialAsync("_LoginPartial")
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container mt-4">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+	<footer class="footer bg-success text-white mt-4">
+		<div class="container py-3">
+			<div class="row">
+				<div class="col-md-6 text-left">
+					&copy; 2024 - Waste Reduction Platform - <a class="text-white" asp-controller="Home" asp-action="Privacy">Privacy</a>
+				</div>
+				<div class="col-md-6 text-right">
+					<div class="social-icons">
+						<!-- Replace '#' with actual links -->
+						<a href="#" class="text-white mr-2"><i class="fab fa-facebook-f"></i></a>
+						<a href="#" class="text-white mr-2"><i class="fab fa-instagram"></i></a>
+						<a href="#" class="text-white mr-2"><i class="fab fa-linkedin-in"></i></a>
+						<a href="#" class="text-white mr-2"><i class="fab fa-twitter"></i></a>
+						<a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 
-    <!-- Ensure jQuery is loaded before Bootstrap and validation scripts -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
-    @RenderSection("Scripts", required: false)
+	<!-- Ensure jQuery is loaded before Bootstrap and validation scripts -->
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js"></script>
+	@RenderSection("Scripts", required: false)
 </body>
 </html>
